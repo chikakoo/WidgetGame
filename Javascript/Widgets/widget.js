@@ -79,7 +79,15 @@ let WidgetHelpers = {
      * @param widget The widget - just use the name of the variable
      * @returns The new widget
      */
-    create: function(widget) {
+
+    createClient: function(widget) {
+        let newWidget = Object.create(widget);
+        newWidget.client = true;
+        this._initialize(newWidget);
+        return newWidget;
+    },
+
+    createServer: function(widget) {
         let newWidget = Object.create(widget);
         this._initialize(newWidget);
         return newWidget;

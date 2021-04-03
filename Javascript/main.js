@@ -1,6 +1,6 @@
 let Main = {
-    clientWidget: WidgetHelpers.create(TextboxWidget),
-    serverWidget: WidgetHelpers.create(TextboxWidget),
+    clientWidget: WidgetHelpers.createClient(LiquidPourWidget),
+    serverWidget: WidgetHelpers.createServer(LiquidPourWidget),
 
     initialize: function() {
         document.body.appendChild(this.clientWidget.div);
