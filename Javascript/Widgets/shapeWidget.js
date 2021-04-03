@@ -28,27 +28,36 @@
      * An array of all the shapes the widget can be
      */
     _allShapes: [
-        "square",
-        "rectangle",
-        "circle",
-        "oval",
-        "pill",
-        "triangle-up",
-        "triangle-down",
-        "triangle-left",
-        "triangle-right",
-        "triangle-top-left",
-        "triangle-top-right",
-        "triangle-bottom-left",
-        "triangle-bottom-right",
-        "chevron-up",
-        "chevron-down",
-        "curved-tail-arrow",
-        "trapezoid",
-        "parallelogram",
-        "star-6",
-        "star-5",
-        //TODO: on pentagon!
+        // "square",
+        // "rectangle",
+        // "circle",
+        // "oval",
+        // "pill",
+        // "triangle-up",
+        // "triangle-down",
+        // "triangle-left",
+        // "triangle-right",
+        // "triangle-top-left",
+        // "triangle-top-right",
+        // "triangle-bottom-left",
+        // "triangle-bottom-right",
+        // "chevron-up",
+        // "chevron-down",
+        // "curved-tail-arrow",
+        // "trapezoid",
+        // "parallelogram",
+        // "star-6",
+        // "star-5",
+        // "pentagon",
+        // "hexagon",
+        // "heart",
+        // "infinity",
+        // "diamond-square",
+        // "diamond-shield",
+        //"diamond-narrow",
+        //"diamond-cut",
+        "egg",
+
     ],
 
     /**
@@ -176,6 +185,39 @@
                 this._shapeDiv.pseudoStyle("before", "border-bottom", `40px solid ${this.color}`);
                 this._shapeDiv.pseudoStyle("after", "color", this.color);
                 this._shapeDiv.pseudoStyle("after", "border-bottom", `35px solid ${this.color}`);
+                break;
+            case "pentagon":
+                this._shapeDiv.style.borderColor = `${this.color} transparent`;
+                this._shapeDiv.pseudoStyle("before", "border-color", `transparent transparent ${this.color}`);
+                break;
+            case "hexagon":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.pseudoStyle("before", "border-bottom", `21.65px solid ${this.color}`);
+                this._shapeDiv.pseudoStyle("after", "border-top", `21.65px solid ${this.color}`);
+                break;
+            case "heart":
+                this._shapeDiv.pseudoStyle("before", "background", this.color);
+                this._shapeDiv.pseudoStyle("after", "background", this.color);
+                break;
+            case "infinity":
+                this._shapeDiv.pseudoStyle("before", "border", `20px solid ${this.color}`);
+                this._shapeDiv.pseudoStyle("after", "border", `20px solid ${this.color}`);
+                break;
+            case "diamond-square":
+                this._shapeDiv.style.borderBottomColor = this.color;
+                this._shapeDiv.pseudoStyle("after", "border-top", `50px solid ${this.color}`);
+                break;
+            case "diamond-shield":
+                this._shapeDiv.style.borderBottom = `20px solid ${this.color}`;
+                this._shapeDiv.pseudoStyle("after", "border-top", `70px solid ${this.color}`);
+                break;
+            case "diamond-narrow":
+                this._shapeDiv.style.borderBottom = `70px solid ${this.color}`;
+                this._shapeDiv.pseudoStyle("after", "border-top", `70px solid ${this.color}`);
+                break;
+            case "diamond-cut":
+                this._shapeDiv.style.borderColor = `transparent transparent ${this.color} transparent`;
+                this._shapeDiv.pseudoStyle("after", "border-color", `${this.color} transparent transparent transparent`);
                 break;
             default:
                 this._shapeDiv.style.backgroundColor = this.color;

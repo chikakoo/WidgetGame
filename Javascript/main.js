@@ -4,7 +4,7 @@ let Main = {
 
     initialize: function() {
         document.body.appendChild(this.clientWidget.div);
-        document.body.appendChild(this.serverWidget.div);
+        //document.body.appendChild(this.serverWidget.div);
     },
 
     testButtonClick: function() {

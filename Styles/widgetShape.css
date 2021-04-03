@@ -4,6 +4,7 @@
 }
 
 .widget-shape-container {
+    overflow: hidden;
     background-color: black;
 }
 
@@ -172,4 +173,191 @@
     border-left: 50px solid transparent;
     transform: rotate(-70deg);
     content: '';
+}
+
+.widget-shape-pentagon {
+    top: 41px;
+    left: 5px;
+    position: relative;
+    width: 54px;
+    box-sizing: content-box;
+    border-width: 50px 18px 0;
+    border-style: solid;
+}
+.widget-shape-pentagon:before {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: -85px;
+    left: -18px;
+    border-width: 0 45px 35px;
+    border-style: solid;
+}
+
+.widget-shape-hexagon {
+    top: 28px;
+    left: 13px;
+    width: 75px;
+    height: 43.3px;
+    position: relative;
+}
+.widget-shape-hexagon:before {
+    content: "";
+    position: absolute;
+    top: -21.65px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 37.5px solid transparent;
+    border-right: 37.5px solid transparent;
+}
+.widget-shape-hexagon:after {
+    content: "";
+    position: absolute;
+    bottom: -21.65px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 37.5px solid transparent;
+    border-right: 37.5px solid transparent;
+}
+
+.widget-shape-heart {
+    top: 12px;
+    position: relative;
+    width: 100px;
+    height: 90px;
+}
+.widget-shape-heart:before, .widget-shape-heart:after {
+    position: absolute;
+    content: "";
+    left: 50px;
+    top: 0;
+    width: 50px;
+    height: 80px;
+    border-radius: 50px 50px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+.widget-shape-heart:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+.widget-shape-infinity {
+    right: 56px;
+    transform: scale(0.47);
+    position: relative;
+    width: 212px;
+    height: 100px;
+    box-sizing: content-box;
+}
+.widget-shape-infinity:before, .widget-shape-infinity:after {
+    content: "";
+    box-sizing: content-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50px 50px 0 50px;
+    transform: rotate(-45deg);
+}
+.widget-shape-infinity:after {
+    left: auto;
+    right: 0;
+    border-radius: 50px 50px 50px 0;
+    transform: rotate(45deg);
+}
+
+.widget-shape-diamond-square {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+    position: relative;
+}
+.widget-shape-diamond-square:after {
+    content: '';
+    position: absolute;
+    left: -50px;
+    top: 50px;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+}
+
+.widget-shape-diamond-shield {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    position: relative;
+}
+.widget-shape-diamond-shield:after {
+    content: '';
+    position: absolute;
+    left: -50px;
+    top: 20px;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+}
+
+.widget-shape-diamond-narrow {
+    top: -52px;
+    transform: scale(0.7);
+    width: 0;
+    height: 0;
+    border: 50px solid transparent;
+    position: relative;
+}
+.widget-shape-diamond-narrow:after {
+    content: '';
+    position: absolute;
+    left: -50px;
+    top: 70px;
+    width: 0;
+    height: 0;
+    border-right: 50px solid transparent;
+    border-left: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+}
+
+.widget-shape-diamond-cut {
+    top: -17px;
+    border-style: solid;
+    border-width: 0 25px 25px 25px;
+    height: 0;
+    width: 50px;
+    box-sizing: content-box;
+    position: relative;
+    margin: 20px 0 50px 0;
+}
+.widget-shape-diamond-cut:after {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: -25px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 70px 50px 0 50px;
+}
+
+.widget-shape-egg {
+    top: -40px;
+    right: 13px;
+    transform: scale(0.5);
+    display: block;
+    width: 126px;
+    height: 180px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
 }
