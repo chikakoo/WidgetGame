@@ -29,16 +29,21 @@
         "oval",
         "pill",
         "triangle-up",
-        // "triangle-down",
-        // "triangle-left",
-        // "triangle-right",
-        // "triangle-top-left",
-        // "triangle-top-right",
-        // "triangle-bottom-left",
-        // "triangle-bottom-right",
-        // "curved-tail-arrow",
+        "triangle-down",
+        "triangle-left",
+        "triangle-right",
+        "triangle-top-left",
+        "triangle-top-right",
+        "triangle-bottom-left",
+        "triangle-bottom-right",
         "chevron-up",
         "chevron-down",
+        "curved-tail-arrow",
+        "trapezoid",
+        "parallelogram",
+        "star-6",
+        "star-5",
+        //TODO: on pentagon!
     ],
 
     /**
@@ -125,13 +130,42 @@
     _adjustInlineStyleForShape: function() {
         switch(this.shape) {
             case "triangle-up":
+            case "triangle-bottom-left":
+            case "triangle-bottom-right":
+            case "trapezoid":
                 this.div.style.borderBottom = `100px solid ${this.color}`;
+                break;
+            case "triangle-down":
+            case "triangle-top-left":
+            case "triangle-top-right":
+                this.div.style.borderTop = `100px solid ${this.color}`;
+                break;
+            case "triangle-left":
+                this.div.style.borderLeft = `100px solid ${this.color}`;
+                break;
+            case "triangle-right":
+                this.div.style.borderRight = `100px solid ${this.color}`;
                 break;
             case "chevron-up":
             case "chevron-down":
-                this.div.style["border"] = `10px solid ${this.color}`;
-                this.div.style["border-top"] = "0";
-                this.div.style["border-left"] = "0";
+                this.div.style.border = `10px solid ${this.color}`;
+                this.div.style.borderTop = "0";
+                this.div.style.borderLeft = "0";
+                break;
+            case "curved-tail-arrow":
+                this.div.style.borderRight = `45px solid ${this.color}`;
+                this.div.pseudoStyle("after", "border-top", `15px solid ${this.color}`);
+                break;
+            case "star-6":
+                this.div.style.borderBottom = `100px solid ${this.color}`;
+                this.div.pseudoStyle("after", "border-top", `100px solid ${this.color}`);
+                break;
+            case "star-5":
+                this.div.style.color = this.color;
+                this.div.style.borderBottom = `70px solid ${this.color}`;
+                this.div.pseudoStyle("before", "border-bottom", `80px solid ${this.color}`);
+                this.div.pseudoStyle("after", "color", this.color);
+                this.div.pseudoStyle("after", "border-bottom", `70px solid ${this.color}`);
                 break;
             default:
                 this.div.style.backgroundColor = this.color;
