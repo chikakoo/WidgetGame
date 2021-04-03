@@ -1,0 +1,50 @@
+.widget-shape {
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+}
+
+/** This is default! */
+/* .widget-shape-square {} */
+
+.widget-shape-rectangle {
+    height: 50px;
+}
+
+.widget-shape-circle {
+    border-radius: 50%;
+}
+
+.widget-shape-pill {
+    border-radius: 100px / 50px;
+}
+
+.widget-shape-oval {
+    width: 200px;
+    border-radius: 100px / 50px;
+}
+
+.widget-shape-chevron-up, .widget-shape-chevron-down {
+    height: 60px;
+    width: 60px;
+    margin: 30px;
+    border-top: 0;
+    border-left: 0;
+}
+
+.widget-shape-chevron-up {
+    transform: rotate(225deg);
+}
+
+.widget-shape-chevron-down {
+    transform: rotate(45deg);
+}
+
+.widget-shape-triangle-up {
+    width: 0;
+    height: 0;
+    border-top: none;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid red;
+}

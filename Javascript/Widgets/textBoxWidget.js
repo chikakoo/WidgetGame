@@ -48,10 +48,10 @@
     /**
      * Compares this widget to the given widget to check whether they match
      * Currently just compares the textboxes
-     * @param otherWidget - the other widget
+     * @param serverWidget - the server widget
      * @return - true if they're the same, false otherwise
      */
-    compare: function(otherWidget) {
-        return this.text === otherWidget.text;
+    compare: function(serverWidget) {
+        return this.text === serverWidget.text;
     },
 };

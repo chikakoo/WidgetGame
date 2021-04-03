@@ -61,10 +61,11 @@ let WidgetBase = {
 
     /**
      * Compares this widget to the given widget to check whether they match
-     * @param otherWidget - the other widget
+     * Intended to be called by the client widget only
+     * @param serverWidget - the server widget
      * @return - true if they're the same, false otherwise
      */
-    compare: function(otherWidget) {
+    compare: function(serverWidget) {
         throw "ERROR: compare not defined!";
     }
 };
@@ -75,11 +76,10 @@ let WidgetBase = {
  */
 let WidgetHelpers = {
     /**
-     * Creates the widget
+     * Creates a client widget
      * @param widget The widget - just use the name of the variable
      * @returns The new widget
      */
-
     createClient: function(widget) {
         let newWidget = Object.create(widget);
         newWidget.client = true;
@@ -87,6 +87,11 @@ let WidgetHelpers = {
         return newWidget;
     },
 
+    /**
+     * Creates a server widget
+     * @param widget The widget - just use the name of the variable
+     * @returns The new widget
+     */
     createServer: function(widget) {
         let newWidget = Object.create(widget);
         this._initialize(newWidget);
