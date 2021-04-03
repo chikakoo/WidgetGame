@@ -20,6 +20,11 @@
     div: null,
 
     /**
+     * The main div containing the shape itself
+     */
+    _shapeDiv: null,
+
+    /**
      * An array of all the shapes the widget can be
      */
     _allShapes: [
@@ -70,7 +75,10 @@
      * Initializes any properties on the widget, including randomizing any relevant settings
      */
     initialize: function() {
-        this.div = dce("div", "widget-shape");
+        this.div = dce("div", "widget-shape-container");
+        this._shapeDiv = dce("div", "widget-shape");
+        this.div.appendChild(this._shapeDiv);
+
         this.populateAllShapes();
 
         let _this = this;
@@ -116,11 +124,11 @@
      * Refreshes the UI - sets the css class and the color
      */
     _refreshUI: function() {
-        this.div.className = "";
-        this.div.style = "";
+        this._shapeDiv.className = "";
+        this._shapeDiv.style = "";
 
-        addCssClass(this.div, `widget-shape`);
-        addCssClass(this.div, `widget-shape-${this.shape}`);
+        addCssClass(this._shapeDiv, `widget-shape`);
+        addCssClass(this._shapeDiv, `widget-shape-${this.shape}`);
         this._adjustInlineStyleForShape();
     },
 
@@ -132,43 +140,45 @@
             case "triangle-up":
             case "triangle-bottom-left":
             case "triangle-bottom-right":
-            case "trapezoid":
-                this.div.style.borderBottom = `100px solid ${this.color}`;
+                this._shapeDiv.style.borderBottom = `100px solid ${this.color}`;
                 break;
             case "triangle-down":
             case "triangle-top-left":
             case "triangle-top-right":
-                this.div.style.borderTop = `100px solid ${this.color}`;
+                this._shapeDiv.style.borderTop = `100px solid ${this.color}`;
                 break;
             case "triangle-left":
-                this.div.style.borderLeft = `100px solid ${this.color}`;
+                this._shapeDiv.style.borderLeft = `100px solid ${this.color}`;
                 break;
             case "triangle-right":
-                this.div.style.borderRight = `100px solid ${this.color}`;
+                this._shapeDiv.style.borderRight = `100px solid ${this.color}`;
+                break;
+            case "trapezoid":
+                this._shapeDiv.style.borderBottom = `50px solid ${this.color}`;
                 break;
             case "chevron-up":
             case "chevron-down":
-                this.div.style.border = `10px solid ${this.color}`;
-                this.div.style.borderTop = "0";
-                this.div.style.borderLeft = "0";
+                this._shapeDiv.style.border = `10px solid ${this.color}`;
+                this._shapeDiv.style.borderTop = "0";
+                this._shapeDiv.style.borderLeft = "0";
                 break;
             case "curved-tail-arrow":
-                this.div.style.borderRight = `45px solid ${this.color}`;
-                this.div.pseudoStyle("after", "border-top", `15px solid ${this.color}`);
+                this._shapeDiv.style.borderRight = `45px solid ${this.color}`;
+                this._shapeDiv.pseudoStyle("after", "border-top", `15px solid ${this.color}`);
                 break;
             case "star-6":
-                this.div.style.borderBottom = `100px solid ${this.color}`;
-                this.div.pseudoStyle("after", "border-top", `100px solid ${this.color}`);
+                this._shapeDiv.style.borderBottom = `75px solid ${this.color}`;
+                this._shapeDiv.pseudoStyle("after", "border-top", `75px solid ${this.color}`);
                 break;
             case "star-5":
-                this.div.style.color = this.color;
-                this.div.style.borderBottom = `70px solid ${this.color}`;
-                this.div.pseudoStyle("before", "border-bottom", `80px solid ${this.color}`);
-                this.div.pseudoStyle("after", "color", this.color);
-                this.div.pseudoStyle("after", "border-bottom", `70px solid ${this.color}`);
+                this._shapeDiv.style.color = this.color;
+                this._shapeDiv.style.borderBottom = `35px solid ${this.color}`;
+                this._shapeDiv.pseudoStyle("before", "border-bottom", `40px solid ${this.color}`);
+                this._shapeDiv.pseudoStyle("after", "color", this.color);
+                this._shapeDiv.pseudoStyle("after", "border-bottom", `35px solid ${this.color}`);
                 break;
             default:
-                this.div.style.backgroundColor = this.color;
+                this._shapeDiv.style.backgroundColor = this.color;
                 break;
         }
     },

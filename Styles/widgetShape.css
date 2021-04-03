@@ -1,12 +1,21 @@
-.widget-shape {
+.widget-shape-container, .widget-shape {
     height: 100px;
     width: 100px;
+}
+
+.widget-shape-container {
+    background-color: black;
+}
+
+.widget-shape {
+    position: relative;
 }
 
 /** This is default! */
 /* .widget-shape-square {} */
 
 .widget-shape-rectangle {
+    top: 25px;
     height: 50px;
 }
 
@@ -19,19 +28,19 @@
 }
 
 .widget-shape-oval {
-    width: 200px;
-    border-radius: 100px / 50px;
+    top: 25px;
+    height: 50px;
+    border-radius: 50px / 25px;
 }
 
 .widget-shape-chevron-up, .widget-shape-chevron-down {
     height: 60px;
     width: 60px;
-    margin: 30px;
-    border-top: 0;
-    border-left: 0;
+    left: 15px;
 }
 
 .widget-shape-chevron-up {
+    top: 30px;
     transform: rotate(225deg);
 }
 
@@ -70,12 +79,13 @@
 }
 
 .widget-shape-curved-tail-arrow {
+    top: 30px;
+    left: 48px;
     position: relative;
     width: 0;
     height: 0;
     border-top: 45px solid transparent;
     transform: rotate(10deg);
-    margin: 30px 20px 20px 50px;
 }
 .widget-shape-curved-tail-arrow:after {
     content: "";
@@ -92,56 +102,61 @@
 }
 
 .widget-shape-trapezoid {
+    top: 25px;
+    left: 12px;
+    width: 50px;
     height: 0;
-    border-left: 25px solid transparent;
-    border-right: 25px solid transparent;
-    margin: 20px;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
 }
 
 .widget-shape-parallelogram {
-    width: 150px;
+    top: 25px;
+    left: 12px;
+    width: 75px;
+    height: 50px;
     transform: skew(20deg);
-    margin: 20px;
 }
 
 .widget-shape-star-6 {
+    top: 1px;
+    left: 11px;
     width: 0;
     height: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
+    border-left: 38px solid transparent;
+    border-right: 38px solid transparent;
     position: relative;
-    margin: 50px;
 }
 .widget-shape-star-6:after {
     width: 0;
     height: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
+    border-left: 38px solid transparent;
+    border-right: 38px solid transparent;
     position: absolute;
     content: "";
-    top: 30px;
-    left: -50px;
+    top: 23px;
+    left: -38px;
 }
 
 .widget-shape-star-5 {
-    margin: 50px 0;
+    top: 33px;
+    left: 2px;
     position: relative;
     display: block;
     width: 0px;
     height: 0px;
-    border-right: 100px solid transparent;
-    border-left: 100px solid transparent;
+    border-right: 50px solid transparent;
+    border-left: 50px solid transparent;
     transform: rotate(35deg);
-    margin: 65px;
 }
 .widget-shape-star-5:before {
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
     position: absolute;
     height: 0;
     width: 0;
-    top: -45px;
-    left: -65px;
+    top: -23px;
+    left: -33px;
     display: block;
     content: '';
     transform: rotate(-35deg);
@@ -149,12 +164,12 @@
 .widget-shape-star-5:after {
     position: absolute;
     display: block;
-    top: 3px;
-    left: -105px;
+    top: 2px;
+    left: -53px;
     width: 0px;
     height: 0px;
-    border-right: 100px solid transparent;
-    border-left: 100px solid transparent;
+    border-right: 50px solid transparent;
+    border-left: 50px solid transparent;
     transform: rotate(-70deg);
     content: '';
 }
