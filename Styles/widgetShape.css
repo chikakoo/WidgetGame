@@ -4,7 +4,7 @@
 }
 
 .widget-shape-container {
-    /*overflow: hidden;*/
+    overflow: hidden;
     background-color: black;
 }
 
@@ -332,14 +332,13 @@
 }
 
 .widget-shape-diamond-cut {
-    top: -17px;
+    top: 2px;
     border-style: solid;
     border-width: 0 25px 25px 25px;
     height: 0;
     width: 50px;
     box-sizing: content-box;
     position: relative;
-    margin: 20px 0 50px 0;
 }
 .widget-shape-diamond-cut:after {
     content: "";
@@ -545,3 +544,200 @@
     width: 50%;
     transform: skew(0deg, -6deg);
   }
+
+  .widget-shape-pac-man {
+    top: -10px;
+    left: -3px;
+    transform: scale(0.8);
+    width: 0px;
+    height: 0px;
+    border-right: 60px solid transparent;
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+}
+
+.widget-shape-talk-bubble {
+    top: 10px;
+    right: 2px;
+    transform: scale(0.65);
+    width: 120px;
+    height: 80px;
+    position: relative;
+    border-radius: 10px;
+}
+.widget-shape-talk-bubble:before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 26px;
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+}
+
+.widget-shape-rss {
+    bottom: 90px;
+    right: 90px;
+    transform: scale(0.3);
+    width: 20em;
+    height: 20em;
+    border-radius: 3em;
+    font-size: 14px;
+}
+.widget-shape-rss:before {
+    content: '';
+    z-index: 1;
+    display: block;
+    height: 5em;
+    width: 5em;
+    background: #fff;
+    border-radius: 50%;
+    position: relative;
+    top: 11.5em;
+    left: 3.5em;
+}
+.widget-shape-rss:after {
+    content: '';
+    display: block;
+    width: 13em;
+    height: 13em;
+    top: -2em;
+    left: 3.8em;
+    border-radius: 2.5em;
+    position: relative;
+}
+
+.widget-shape-burst-12 {
+    top: 10px;
+    left: 10px;
+    transform: scale(0.9);
+    width: 80px;
+    height: 80px;
+    position: relative;
+    text-align: center;
+  }
+.widget-shape-burst-12:before,
+.widget-shape-burst-12:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 80px;
+    width: 80px;
+}
+.widget-shape-burst-12:before {
+    transform: rotate(30deg);
+}
+.widget-shape-burst-12:after {
+    transform: rotate(60deg);
+}
+
+.widget-shape-burst-8 {
+    top: 10px;
+    left: 10px;
+    transform: scale(0.9) rotate(20deg);
+    width: 80px;
+    height: 80px;
+    position: relative;
+    text-align: center;
+}
+.widget-shape-burst-8:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 80px;
+    width: 80px;
+    transform: rotate(135deg);
+}
+
+.widget-shape-yin-yang {
+    width: 96px;
+    box-sizing: content-box;
+    height: 48px;
+    background: white;
+    border-style: solid;
+    border-width: 2px 2px 50px 2px;
+    border-radius: 100%;
+    position: relative;
+}
+.widget-shape-yin-yang:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    background: white;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    box-sizing: content-box;
+}
+.widget-shape-yin-yang:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 18px solid white;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    box-sizing: content-box;
+}
+
+.widget-shape-ribbon {
+    bottom: 12px;
+    transform: scale(0.75);
+    position: relative;
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+}
+.widget-shape-ribbon:before,
+.widget-shape-ribbon:after {
+    content: '';
+    position: absolute;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    top: 70px;
+    left: -10px;
+    transform: rotate(-140deg);
+}
+.widget-shape-ribbon:after {
+    left: auto;
+    right: -10px;
+    transform: rotate(140deg);
+}
+
+.widget-shape-space-invader {
+    top: 38px;
+    right: -42px;
+    transform: scale(0.55);
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+}
+
+.widget-shape-tv-screen {
+    bottom: 26px;
+    right: 50px;
+    transform: scale(0.45);
+    position: relative;
+    width: 200px;
+    height: 150px;
+    border-radius: 50% / 10%;
+    text-align: center;
+    text-indent: .1em;
+}
+.widget-shape-tv-screen:before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    right: -5%;
+    left: -5%;
+    background: inherit;
+    border-radius: 5% / 50%;
+}

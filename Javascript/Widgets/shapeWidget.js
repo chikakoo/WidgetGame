@@ -28,43 +28,52 @@
      * An array of all the shapes the widget can be
      */
     _allShapes: [
-        // "square",
-        // "rectangle",
-        // "circle",
-        // "oval",
-        // "pill",
-        // "triangle-up",
-        // "triangle-down",
-        // "triangle-left",
-        // "triangle-right",
-        // "triangle-top-left",
-        // "triangle-top-right",
-        // "triangle-bottom-left",
-        // "triangle-bottom-right",
-        // "chevron-up",
-        // "chevron-down",
+        "square",
+        "rectangle",
+        "circle",
+        "oval",
+        "pill",
+        "triangle-up",
+        "triangle-down",
+        "triangle-left",
+        "triangle-right",
+        "triangle-top-left",
+        "triangle-top-right",
+        "triangle-bottom-left",
+        "triangle-bottom-right",
+        "chevron-up",
+        "chevron-down",
         "chevron-fat",
-        // "curved-tail-arrow",
-        // "trapezoid",
-        // "parallelogram",
-        // "star-6",
-        // "star-5",
-        // "pentagon",
-        // "hexagon",
-        // "heart",
-        // "infinity",
-        // "diamond-square",
-        // "diamond-shield",
-        //"diamond-narrow",
-        //"diamond-cut",
-        //"egg",
-        //"cross",
-        //"base",
-        //"lock",
-        //"cone",
-        //"moon",
-        //"facebook",
-        //"magnifying-glass",
+        "curved-tail-arrow",
+        "trapezoid",
+        "parallelogram",
+        "star-6",
+        "star-5",
+        "pentagon",
+        "hexagon",
+        "heart",
+        "infinity",
+        "diamond-square",
+        "diamond-shield",
+        "diamond-narrow",
+        "diamond-cut",
+        "egg",
+        "cross",
+        "base",
+        "lock",
+        "cone",
+        "moon",
+        "facebook",
+        "magnifying-glass",
+        "pac-man",
+        "talk-bubble",
+        "rss",
+        "burst-12",
+        "burst-8",
+        "yin-yang",
+        "ribbon",
+        "space-invader",
+        "tv-screen"
     ],
 
     /**
@@ -260,6 +269,73 @@
             case "magnifying-glass":
                 this._shapeDiv.style.border = `0.1em solid ${this.color}`;
                 this._shapeDiv.pseudoStyle("before", "background", this.color);
+                break;
+            case "pac-man":
+                this._shapeDiv.style.borderTop = `60px solid ${this.color}`;
+                this._shapeDiv.style.borderBottom = `60px solid ${this.color}`;
+                this._shapeDiv.style.borderLeft = `60px solid ${this.color}`;
+                break;
+            case "talk-bubble":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.pseudoStyle("before", "border-right", `26px solid ${this.color}`);
+                break;
+            case "rss":
+                this._shapeDiv.style.backgroundColor = this.color;
+                this._shapeDiv.pseudoStyle("after", "background", this.color);
+                this._shapeDiv.pseudoStyle("after", "box-shadow", `-2em 2em 0 0 #fff inset, -4em 4em 0 0 ${this.color} inset, -6em 6em 0 0 #fff inset`);
+                break;
+            case "burst-12":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.pseudoStyle("before", "background", this.color);
+                this._shapeDiv.pseudoStyle("after", "background", this.color);
+                break;
+            case "burst-8":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.pseudoStyle("before", "background", this.color);
+                break;
+            case "yin-yang":
+                this._shapeDiv.style.borderColor = this.color;
+                this._shapeDiv.pseudoStyle("before", "border", `18px solid ${this.color}`);
+                this._shapeDiv.pseudoStyle("after", "background", this.color);
+                break;
+            case "ribbon":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.pseudoStyle("before", "border-bottom", `70px solid ${this.color}`);
+                this._shapeDiv.pseudoStyle("after", "border-bottom", `70px solid ${this.color}`);
+                break;
+            case "space-invader":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.style.boxShadow = 
+                    `0 0 0 1em ${this.color},
+                    0 1em 0 1em ${this.color},
+                    -2.5em 1.5em 0 .5em ${this.color},
+                    2.5em 1.5em 0 .5em ${this.color},
+                    -3em -3em 0 0 ${this.color},
+                    3em -3em 0 0 ${this.color},
+                    -2em -2em 0 0 ${this.color},
+                    2em -2em 0 0 ${this.color},
+                    -3em -1em 0 0 ${this.color},
+                    -2em -1em 0 0 ${this.color},
+                    2em -1em 0 0 ${this.color},
+                    3em -1em 0 0 ${this.color},
+                    -4em 0 0 0 ${this.color},
+                    -3em 0 0 0 ${this.color},
+                    3em 0 0 0 ${this.color},
+                    4em 0 0 0 ${this.color},
+                    -5em 1em 0 0 ${this.color},
+                    -4em 1em 0 0 ${this.color},
+                    4em 1em 0 0 ${this.color},
+                    5em 1em 0 0 ${this.color},
+                    -5em 2em 0 0 ${this.color},
+                    5em 2em 0 0 ${this.color},
+                    -5em 3em 0 0 ${this.color},
+                    -3em 3em 0 0 ${this.color},
+                    3em 3em 0 0 ${this.color},
+                    5em 3em 0 0 ${this.color},
+                    -2em 4em 0 0 ${this.color},
+                    -1em 4em 0 0 ${this.color},
+                    1em 4em 0 0 ${this.color},
+                    2em 4em 0 0 ${this.color}`;
                 break;
             default:
                 this._shapeDiv.style.backgroundColor = this.color;
