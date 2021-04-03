@@ -43,6 +43,7 @@
         // "triangle-bottom-right",
         // "chevron-up",
         // "chevron-down",
+        "chevron-fat",
         // "curved-tail-arrow",
         // "trapezoid",
         // "parallelogram",
@@ -56,8 +57,14 @@
         // "diamond-shield",
         //"diamond-narrow",
         //"diamond-cut",
-        "egg",
-
+        //"egg",
+        //"cross",
+        //"base",
+        //"lock",
+        //"cone",
+        //"moon",
+        //"facebook",
+        //"magnifying-glass",
     ],
 
     /**
@@ -171,6 +178,10 @@
                 this._shapeDiv.style.borderTop = "0";
                 this._shapeDiv.style.borderLeft = "0";
                 break;
+            case "chevron-fat":
+                this._shapeDiv.pseudoStyle("before", "background", this.color);
+                this._shapeDiv.pseudoStyle("after", "background", this.color);
+                break;
             case "curved-tail-arrow":
                 this._shapeDiv.style.borderRight = `45px solid ${this.color}`;
                 this._shapeDiv.pseudoStyle("after", "border-top", `15px solid ${this.color}`);
@@ -218,6 +229,37 @@
             case "diamond-cut":
                 this._shapeDiv.style.borderColor = `transparent transparent ${this.color} transparent`;
                 this._shapeDiv.pseudoStyle("after", "border-color", `${this.color} transparent transparent transparent`);
+                break;
+            case "cross":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.pseudoStyle("after", "background", this.color);
+                break;
+            case "base":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.pseudoStyle("before", "border-bottom", `35px solid ${this.color}`);
+                break;
+            case "lock":
+                this._shapeDiv.style.border = `3.5em solid ${this.color}`;
+                this._shapeDiv.style.borderRightWidth = "7.5em";
+                this._shapeDiv.style.borderLeftWidth = "7.5em";
+                this._shapeDiv.pseudoStyle("before", "border", `2.5em solid ${this.color}`);
+                this._shapeDiv.pseudoStyle("after", "border", `1em solid ${this.color}`);
+                break;
+            case "cone":
+                this._shapeDiv.style.borderTop = `100px solid ${this.color}`;
+                break;
+            case "moon":
+                this._shapeDiv.style.boxShadow = `15px 15px 0 0 ${this.color}`;
+                break;
+            case "facebook":
+                this._shapeDiv.style.background = this.color;
+                this._shapeDiv.style.border = `15px solid ${this.color}`;
+                this._shapeDiv.style.borderBottom = 0;
+                this._shapeDiv.pseudoStyle("before", "background", this.color);
+                break;
+            case "magnifying-glass":
+                this._shapeDiv.style.border = `0.1em solid ${this.color}`;
+                this._shapeDiv.pseudoStyle("before", "background", this.color);
                 break;
             default:
                 this._shapeDiv.style.backgroundColor = this.color;
