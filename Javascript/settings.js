@@ -1,0 +1,3 @@
+let Settings = {
+    debugMode: true
+}
