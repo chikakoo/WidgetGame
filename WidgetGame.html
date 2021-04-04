@@ -23,10 +23,23 @@
 	</head>
 
         <body oncontextmenu="return false" onload="Main.initialize()">
-                <div id="serverRoomButtonContainer">
-                        <input type="text" placeholder="Server name" />
-                        <input type="text" placeholder="Username" />
-                        <button id="create">Create</button>
+                <div id="preRoomJoin">
+                        <div id="errors" class="error nodisp"></div>
+                        <div id="usernameContainer">
+                                <input id="inputUsername" type="text" placeholder="Username" />
+                        </div>
+                        <input id="inputRoomName" type="text" placeholder="Room name" />
+                        <button id="create" onclick="Main.onCreateRoomClicked()">Create</button>
+
+                        <div id="roomListContainer">
+                                <div>Room List - Click to join</div>
+                                <div id="roomList"></div>
+                        </div>
+                </div>
+
+                <div id="roomLobby" class="nodisp">
+                        <div id="playerList"></div>
+                        <button id="startGame" onclick="Main.onStartGameClicked()">Start</button>
                 </div>
         </body>
 </html>
