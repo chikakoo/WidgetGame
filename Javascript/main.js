@@ -9,6 +9,8 @@ let Main = {
         if (Settings.debugMode) {
             this._initializeForDebug();
         }
+
+        SocketClient.connect();
     },
 
     /**

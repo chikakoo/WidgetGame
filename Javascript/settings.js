@@ -1,3 +1,3 @@
 let Settings = {
     debugMode: true
-}
+};

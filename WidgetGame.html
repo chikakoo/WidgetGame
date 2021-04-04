@@ -3,6 +3,7 @@
 <html>
         <head>
         <title>Widget Game</title>
+        <script src="/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="Javascript/globals.js"></script>
         <script type="text/javascript" src="Javascript/settings.js"></script>
         <script type="text/javascript" src="Javascript/helpers.js"></script>
@@ -12,6 +13,7 @@
         <script type="text/javascript" src="Javascript/Widgets/textBoxWidget.js"></script>
         <script type="text/javascript" src="Javascript/Widgets/shapeWidget.js"></script>
         <script type="text/javascript" src="Javascript/Widgets/liquidPourWidget.js"></script>
+        <script type="text/javascript" src="Javascript/SocketClient.js"></script>
         <script type="text/javascript" src="Javascript/main.js"></script>
         <!-- <link rel="icon" href="" type="image/icon type"> -->
         <link rel="stylesheet" href="Styles/styles.css">
@@ -21,5 +23,10 @@
 	</head>
 
         <body oncontextmenu="return false" onload="Main.initialize()">
+                <div id="serverRoomButtonContainer">
+                        <input type="text" placeholder="Server name" />
+                        <input type="text" placeholder="Username" />
+                        <button id="create">Create</button>
+                </div>
         </body>
 </html>
