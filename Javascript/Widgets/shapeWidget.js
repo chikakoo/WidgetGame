@@ -87,14 +87,34 @@
     shape: null,
 
     /**
-     * An array of the current colors being used
+     * All potential colors that could be hard-coded in the color-picker
      */
-    _currentColors: [],
+    _allColors: [
+        "#FF0000",
+        "#FFA500",
+        "#FFFF00",
+        "#008000",
+        "#0000FF",
+        "#800080",
+        "#FFC0CB",
+        "#000000",
+        "#A52A2A"
+    ],
+
+    /**
+     * The colors that are hard-coded in the color-picker
+     */
+    _usedColors: [],
 
     /**
      * The current color of the widget
      */
     color: "green",
+
+    /**
+     * The color picker
+     */
+    _colorPicker: null,
 
     /**
      * Initializes any properties on the widget, including randomizing any relevant settings
@@ -131,18 +151,21 @@
      */
     randomize: function() {
         this.shape = Random.getRandomValueFromArray(this._allShapes);
-        this.color = Random.getRandomValueFromArray(this._getRandomColors());
+
+        this._setUpUsedColors();
+        this.color = Random.getRandomValueFromArray(this._usedColors);
+
         this._refreshUI();
     },
 
     /**
      * Gets a randomly generated array of rgb colors to cycle through
      * Easy mode will use a random set of colors
-     * TODO: this
+     * TODO: this - a different amount based on difficulty
      * @returns an array of colors
      */
-    _getRandomColors: function() {
-        return ["green", "red", "cyan"];
+    _setUpUsedColors: function() {
+        this._usedColors = Random.getRandomValuesFromArray(this._allColors, this._allColors.length);
     },
 
     /**
@@ -155,6 +178,8 @@
         addCssClass(this._shapeDiv, `widget-shape`);
         addCssClass(this._shapeDiv, `widget-shape-${this.shape}`);
         this._adjustInlineStyleForShape();
+
+        this._setUpColorPicker();
     },
 
     /**
@@ -344,11 +369,33 @@
     },
 
     /**
+     * Sets up the color picker
+     */
+    _setUpColorPicker: function() {
+        if (!this._colorPicker) {
+            this._colorPicker = ColorPicker.create(this._usedColors);
+
+            let colorPickerDiv = dce("div", "widget-shape-color-picker-container");
+            colorPickerDiv.appendChild(this._colorPicker.element);
+            this.div.appendChild(colorPickerDiv);
+
+            this._colorPicker.input.value = this.color;
+
+            let _this = this;
+            this._colorPicker.input.onchange = function() {
+                _this.color = _this._colorPicker.input.value;
+                _this._refreshUI();
+            }
+        }
+    },
+
+    /**
      * Compares this widget to the given widget to check whether they match
      * @param serverWidget - the server widget
      * @return - true if they're the same, false otherwise
      */
     compare: function(serverWidget) {
+        // TODO: color ranges if custom colors are used
         return this.shape === serverWidget.shape && this.color === serverWidget.color;
     }
 };

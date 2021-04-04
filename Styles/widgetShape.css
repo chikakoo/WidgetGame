@@ -4,12 +4,39 @@
 }
 
 .widget-shape-container {
+    position: relative;
     overflow: hidden;
-    background-color: black;
 }
 
 .widget-shape {
     position: relative;
+}
+
+.widget-shape-color-picker-container {
+    position: absolute;
+    top: 0;
+}
+
+.widget-shape-color-picker-container input {
+    display: none;
+    width: 10px;
+    height: 10px;
+    -webkit-appearance: none;
+	border: 3px solid black;
+    padding: 0;
+    background: none;
+}
+
+.widget-shape-container:hover input {
+    display: block;
+}
+
+.widget-shape-color-picker-container input::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+.widget-shape-color-picker-container input::-webkit-color-swatch {
+	border: none;
 }
 
 /** This is default! */
