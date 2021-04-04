@@ -59,6 +59,40 @@ io.on('connection', function(client) {
     client.on('update_connected_usernames', function(roomName) {
         client.emit("update_connected_usernames", getConnectedUsernames(roomName));
     });
+
+    /**
+     * The round start - widgets contains an id-separated list of widgets
+     * Sends back the list of client widgets to be used by the client
+     */
+    client.on('round_start', function(roomName, serverWidgets, clientWidgets) {
+        console.log("TEST: " + clientWidgets[0].onclick);
+
+        rooms[roomName].activeWidgets = serverWidgets;
+        client.broadcast.emit('round_start', clientWidgets);
+    });
+
+    /**
+     * Check the state of the round - compares the list of client widgets to the goal state of the server widgets
+     */
+    client.on('check_round', function(roomName, clientWidgets) {
+        console.log("Checking round...");
+
+        let serverWidgets = rooms[roomName].activeWidgets;
+        let allMatch = true;
+        Object.keys(serverWidgets).forEach(function(widgetId) {
+            if (!clientWidgets[widgetId].compare(serverWidgets[widgetId])) {
+                allMatch = false;
+            }
+        });
+
+        if (allMatch) {
+            console.log("Round win!");
+            client.broadcast.emit('round_win');
+        } else {
+            console.log("No win yet...");
+            client.broadcast.emit('round_checked');
+        }
+    });
 });
 
 getConnectedUsernames = function(roomName) {

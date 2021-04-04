@@ -5,16 +5,29 @@ let Main = {
     roomName: "",
 
     /**
+     * Whether you're the client
+     */
+    isClient: true,
+
+    /**
+     * An object of active widgets, keyed by widget ID
+     */
+    activeWidgets: {},
+
+    /**
      * Debug properties
      */
-    clientWidget: WidgetHelpers.createClient(WidgetShape),
-    serverWidget: WidgetHelpers.createServer(WidgetShape),
+    clientWidget: null,
+    serverWidget: null,
 
     /**
      * Initialize the application
      */
     initialize: function() {
         if (Settings.debugMode) {
+            let widgets = WidgetHelpers.create(WidgetShape);
+            this.clientWidget = widgets.client;
+            this.serverWidget = widgets.server;
             this._initializeForDebug();
         }
 
@@ -34,6 +47,7 @@ let Main = {
             return;
         }
 
+        this.isClient = true;
         SocketClient.createRoom(roomAndUsername.roomName, roomAndUsername.username);
     },
 
@@ -83,6 +97,7 @@ let Main = {
                 if (!roomAndUsername) {
                     return;
                 }
+                this.isClient = false;
                 SocketClient.joinRoom(roomButton.innerText, roomAndUsername.username);
             }
             roomListDiv.appendChild(roomButton);
@@ -110,6 +125,50 @@ let Main = {
         playerList.innerText = usernames.join(" ");
     },
 
+    /**
+     * Starts the game
+     */
+    onStartGameClicked: function() {
+        let widgets = WidgetHelpers.create(WidgetShape);
+        this.activeWidgets[widgets.client.id] = widgets.client;
+
+        let serverWidgets = {};
+        serverWidgets[widgets.server.id] = widgets.server;
+
+        SocketClient.roundStart(serverWidgets, this.activeWidgets);
+    },
+
+    /**
+     * Shows the game widgets
+     */
+    showGameWidgets: function(clientWidgets) {
+        let gameWinDiv = document.getElementById("checkGameWin");
+        if (Main.isClient) {
+            Main.activeWidgets = clientWidgets;
+            removeCssClass(gameWinDiv, "nodisp");
+        } else {
+            addCssClass(gameWinDiv, "nodisp");
+        }
+
+        let widgetContainer = document.getElementById("widgetContainer");
+        widgetContainer.innerHTML = "";
+        Object.keys(clientWidgets).forEach(function(id) {
+            let widget = clientWidgets[id];
+            widget.createDiv(); // This won't exist after being sent across socket.io, so recreate it
+            widgetContainer.appendChild(widget.div);
+        });
+        
+        addCssClass(document.getElementById("roomLobby"), "nodisp");
+        removeCssClass(document.getElementById("gameActive"), "nodisp");
+    },
+
+    /**
+     * Executed when the round is won
+     * TODO STILL
+     */
+    onRoundWin: function() {
+        console.log("WIN!");
+    },
 
     /** DEBUG MODE AREA */
 

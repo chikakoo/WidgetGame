@@ -33,6 +33,18 @@ SocketClient = {
         this._socket.on('update_connected_usernames', function(usernames) {
             Main.updateConnectedUsernames(usernames);
         });
+
+        this._socket.on('round_start', function(clientWidgets) {
+            Main.showGameWidgets(clientWidgets);
+        });
+
+        this._socket.on('round_checked', function() {
+            console.log("Round checked - not won yet");
+        });
+
+        this._socket.on('round_win', function() {
+            Main.onRoundWin();
+        });
     },
 
     /**
@@ -73,6 +85,27 @@ SocketClient = {
     updateConnectedUsernames: function() {
         if (this._socket) {
             this._socket.emit("update_connected_usernames", Main.roomName);
+        }
+    },
+
+    /**
+     * Starts the round
+     * @param serverWidgets - an object of server widgets, keyed by id
+     * @param clientWidgets - an object of client widgets, keyed by id
+     */
+    roundStart: function(serverWidgets, clientWidgets) {
+        if (this._socket) {
+            this._socket.emit("round_start", Main.roomName, serverWidgets, clientWidgets);
+        }
+    },
+
+    /**
+     * Checks the state of the given client widgets against the server
+     * @param clientWidgets - an object of client widgets, keyed by id
+     */
+    checkRound: function(clientWidgets) {
+        if (this._socket) {
+            this._socket.emit("check_round", clientWidgets);
         }
     }
 };

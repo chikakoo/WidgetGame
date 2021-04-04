@@ -76,26 +76,22 @@ let WidgetBase = {
  */
 let WidgetHelpers = {
     /**
-     * Creates a client widget
-     * @param widget The widget - just use the name of the variable
-     * @returns The new widget
+     * Creates a client and server widget
+     * @param widget - the widget to create
+     * @return - an object containing the client and server widget
      */
-    createClient: function(widget) {
-        let newWidget = Object.create(widget);
-        newWidget.client = true;
-        this._initialize(newWidget);
-        return newWidget;
-    },
+    create: function(widget) {
+        let clientWidget = Object.create(widget);
+        clientWidget.client = true;
+        clientWidget.id = Globals.widgets++;
 
-    /**
-     * Creates a server widget
-     * @param widget The widget - just use the name of the variable
-     * @returns The new widget
-     */
-    createServer: function(widget) {
-        let newWidget = Object.create(widget);
-        this._initialize(newWidget);
-        return newWidget;
+        let serverWidget = Object.create(widget);
+        serverWidget.id = clientWidget.id;
+
+        this._initialize(clientWidget);
+        this._initialize(serverWidget);
+
+        return { client: clientWidget, server: serverWidget }
     },
 
     /**
