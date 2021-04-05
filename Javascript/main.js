@@ -267,6 +267,7 @@ let Main = {
 
         this.clientWidget = JSON.parse(JSON.stringify(this.serverWidget));
         this.clientWidget = Object.assign({}, Main.map[this.serverWidget.typeString], this.serverWidget);
+        this.clientWidget.client = true;
         this.clientWidget.randomize();
         this.clientWidget.createDiv();
 
