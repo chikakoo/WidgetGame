@@ -15,6 +15,11 @@ let Main = {
     activeWidgets: {},
 
     /**
+     * The current level of the game
+     */
+    currentLevel: 0,
+
+    /**
      * A map of widget types to their default objects
      */
     map: {
@@ -24,19 +29,10 @@ let Main = {
     },
 
     /**
-     * Debug properties
-     */
-    clientWidget: null,
-    serverWidget: null,
-
-    /**
      * Initialize the application
      */
     initialize: function() {
         if (Settings.debugMode) {
-            let widgets = WidgetHelpers.create(ShapeWidget);
-            this.clientWidget = widgets.client;
-            this.serverWidget = widgets.server;
             this._initializeForDebug();
         }
 
@@ -55,6 +51,8 @@ let Main = {
         if (!roomAndUsername) {
             return;
         }
+
+        this.currentLevel = 1;
         SocketClient.createRoom(roomAndUsername.roomName, roomAndUsername.username);
     },
 
@@ -117,6 +115,7 @@ let Main = {
      */
     onRoomJoined: function(roomName) {
         Main.roomName = roomName;
+        Main.currentLevel = 1;
 
         addCssClass(document.getElementById("preRoomJoin"), "nodisp");
         removeCssClass(document.getElementById("roomLobby"), "nodisp");
@@ -140,9 +139,9 @@ let Main = {
     },
 
     /**
-     * Starts the game
+     * Starts the game at the current level
      */
-    onStartGameClicked: function() {
+    startRound: function() {
         this._createAndSetWidgetsForGame();
         SocketClient.roundStart();
         this.showGameWidgets(this.activeWidgets);
@@ -150,14 +149,14 @@ let Main = {
 
     /**
      * Gets an array of widgets to use for the next game
-     * TODO: the real logic for this
-     * @param levelNumber - the level number to use for difficulty, etc.
+     * TODO: deal with difficulties and modifiers, etc.
      */
-    _createAndSetWidgetsForGame: function(levelNumber) {
-        let widget = WidgetHelpers.create(ShapeWidget);
-
+    _createAndSetWidgetsForGame: function() {
         this.activeWidgets = {};
-        this.activeWidgets[widget.id] = widget;
+        for (let i = 0; i < this.currentLevel; i++) {
+            let widget = WidgetHelpers.create(Random.getRandomEntryFromObject(this.map));
+            this.activeWidgets[widget.id] = widget;
+        }
     },
 
     /**
@@ -179,6 +178,7 @@ let Main = {
             widgetContainer.appendChild(widgets[id].div);
         });
         
+        document.getElementById("levelDiv").innerText = `Level: ${Main.currentLevel++}`;
         addCssClass(document.getElementById("roomLobby"), "nodisp");
         removeCssClass(document.getElementById("gameActive"), "nodisp");
     },
@@ -236,20 +236,23 @@ let Main = {
     },
 
     /**
-     * Executed when the round is won
-     * TODO STILL
+     * Executed when the round is won - starts the next round!
      */
     onRoundWin: function() {
-        console.log("WIN!");
+        if (!Main.isClient) {
+            Main.startRound();
+        }
     },
 
     /** DEBUG MODE AREA */
 
     /**
      * Initialize for debug mode
+     * See the comment for what to change to test!
      */
     _initializeForDebug: function() {
         let header = dce("h1");
+        header.id = "testHeader";
         header.innerText = "Figure out the answer";
 
         let testButton = dce("button");
@@ -259,12 +262,20 @@ let Main = {
         document.body.appendChild(header);
         document.body.appendChild(testButton);
 
+        // TO TEST THINGS, CHANGE THE SHAPE TYPE IN THIS LINE!
+        this.serverWidget = WidgetHelpers.create(ShapeWidget);
+
+        this.clientWidget = JSON.parse(JSON.stringify(this.serverWidget));
+        this.clientWidget = Object.assign({}, Main.map[this.serverWidget.typeString], this.serverWidget);
+        this.clientWidget.randomize();
+        this.clientWidget.createDiv();
+
         document.body.appendChild(this.clientWidget.div);
-        //document.body.appendChild(this.serverWidget.div);
+        document.body.appendChild(this.serverWidget.div);
     },
 
     testButtonClick: function() {
         let h1Text = this.clientWidget.compare(this.serverWidget) ? "Good!" : "Nope.";
-        document.getElementById("header").innerText = h1Text;
+        document.getElementById("testHeader").innerText = h1Text;
     }
 };

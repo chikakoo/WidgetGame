@@ -175,18 +175,26 @@
         this._shapeDiv = dce("div", "widget-shape");
         this.div.appendChild(this._shapeDiv);
 
-        let _this = this;
-        this.div.onclick = function() {
-            let shapeIndex = _this._currentShapes.indexOf(_this.shape);
-            if (shapeIndex >= 0) {
-                shapeIndex++;
-                shapeIndex = shapeIndex < _this._currentShapes.length ? shapeIndex : 0;
-                _this.shape = _this._currentShapes[shapeIndex];
-                _this._refreshUI();
-            }
-        }
+        this.div.onclick = this._advanceShape.bind(this, 1);
+        this.div.oncontextmenu = this._advanceShape.bind(this, -1);
 
         this._refreshUI();
+    },
+
+    /**
+     * Advances the shape by the given amount
+     * @param amount - the amount
+     */
+    _advanceShape: function(amount) {
+        let shapeIndex = this._currentShapes.indexOf(this.shape);
+        if (shapeIndex >= 0) {
+            shapeIndex += amount;
+            if (shapeIndex < 0) { shapeIndex = this._currentShapes.length - 1; }
+            if (shapeIndex >= this._currentShapes.length) { shapeIndex = 0; }
+
+            this.shape = this._currentShapes[shapeIndex];
+            this._refreshUI();
+        }
     },
 
     /**
