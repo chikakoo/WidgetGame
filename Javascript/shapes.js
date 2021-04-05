@@ -60,12 +60,16 @@ let Shapes = {
      * @param color - the color to make the shape
      */
     createDiv: function(value, color) {
+        let containerDiv = dce("div");
+
         let div = dce("div", "widget-shape");
         addCssClass(div, `widget-shape`);
         addCssClass(div, `widget-shape-${value}`);
 
         this._adjustInlineStyleForShape(value, color, div);
-        return div;
+
+        containerDiv.appendChild(div);
+        return containerDiv;
     },
 
     /**

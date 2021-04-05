@@ -149,11 +149,15 @@
      * Refreshes the UI - sets the css class and the color
      */
     _refreshUI: function() {
-        if (this._shapeDiv) {
-            this._shapeDiv.remove();
+        let shapeDivId = `shapeWidget${this.id}${this.client ? "Client" : "Server"}`;
+        let shapeDivToRemove = document.getElementById(shapeDivId);
+        if (shapeDivToRemove) {
+            shapeDivToRemove.remove();
         }
 
         this._shapeDiv = Shapes.createDiv(this.shape, this.color);
+        this._shapeDiv.id = shapeDivId;
+
         this.div.appendChild(this._shapeDiv);
         this._setUpColorPicker();
     },

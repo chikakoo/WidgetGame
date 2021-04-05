@@ -1,21 +1,29 @@
-.widget-rotationMatch {
-    position:relative;
-    width: 100px;
-    height: 100px;
-    background-color:gray;
+.widget-rotationMatch-container {
+    display: flex;
+    flex-direction: row;
 }
 
-.widget-rotationMatch-shape {
-    position:absolute;
-    top: 25%;
-    left: 25%;
+.widget-rotationMatch-button-container {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    justify-content: space-evenly;
+    padding-left: 5px;
+}
+
+.widget-rotationMatch {
+    overflow: hidden;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: gray;
 }
 
 @keyframes widget-rotationMatch-rotatingAnim {
-    from{
+    from {
         -webkit-transform: rotate(0deg);
     }
-    to{
+    to {
         -webkit-transform: rotate(360deg);
     }
 }
@@ -24,16 +32,17 @@
     animation: widget-rotationMatch-rotatingAnim 2s linear infinite;
 }
 
-.widget-rotationMatch-increaseButton{
-    position:absolute;
+.widget-rotationMatch-rotating > div {
+    overflow: hidden;
+}
+
+.widget-rotationMatch-increaseButton {
     border: 4px solid #d67d34;
     transform: rotate(225deg);    
 }
 
-.widget-rotationMatch-decreaseButton{ 
-    position:absolute;
+.widget-rotationMatch-decreaseButton { 
     border: 4px solid #2e5fff;
-    top: 45px;
     transform: rotate(45deg);
     background-color:white;
 }

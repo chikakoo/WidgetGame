@@ -50,8 +50,7 @@ let RotationMatchWidget = {
         this.rotationSpeedCurr = this.rotationSpeedBegin;
         this.rotationSpeedCurr = 0;
         this.shapeColor = Random.getRandomColorHexString();
-        this.shapeType = Random.getRandomValueFromArray(Object.values(Shapes.values));
-        console.log(this.shapeColor);
+        this.shapeType = Random.getRandomValueFromArray(Object.values(Shapes.values).filter(x => x !== Shapes.values.CIRCLE));
 
     },
 
@@ -87,12 +86,11 @@ let RotationMatchWidget = {
      * Handles the div creation
      */
     createDiv: function() {
-        this.div = dce("div", "widget-rotationMatch");
+        this.div = dce("div", "widget-rotationMatch-container");
+
         this.shapeDiv = Shapes.createDiv(this.shapeType, this.shapeColor);
-        addCssClass(this.shapeDiv, "widget-rotationMatch-shape");
         addCssClass(this.shapeDiv, "widget-rotationMatch-rotating");
         this.shapeDiv.style.animation = `widget-rotationMatch-rotatingAnim ${Object.values(this._rotationSpeed)[this.rotationSpeedCurr]}s linear infinite`;
-        console.log(Object.keys(this._rotationSpeed)[this.rotationSpeedCurr]);
 
         this.increaseSpeedButton = dce("div", "widget-rotationMatch-increaseButton");
         this.increaseSpeedButton.onmousedown = this.changeSpeed.bind(this, true);
@@ -100,14 +98,19 @@ let RotationMatchWidget = {
         this.decreaseSpeedButton = dce("div", "widget-rotationMatch-decreaseButton");    
         this.decreaseSpeedButton.onmousedown = this.changeSpeed.bind(this, false);
 
+        let buttonContainer = dce("div", "widget-rotationMatch-button-container");
+        buttonContainer.appendChild(this.increaseSpeedButton);
+        buttonContainer.appendChild(this.decreaseSpeedButton);
+
         if (!this.client){
             addCssClass(this.increaseSpeedButton, "hidden");
             addCssClass(this.decreaseSpeedButton, "hidden");
         }
 
-        this.div.appendChild(this.shapeDiv);
-        this.div.appendChild(this.increaseSpeedButton);
-        this.div.appendChild(this.decreaseSpeedButton);
+        let rotationDivBackground = dce("div", "widget-rotationMatch");
+        rotationDivBackground.appendChild(this.shapeDiv);
 
+        this.div.appendChild(rotationDivBackground);
+        this.div.appendChild(buttonContainer);
     }
 };
