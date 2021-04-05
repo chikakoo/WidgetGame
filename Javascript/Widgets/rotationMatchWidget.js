@@ -50,6 +50,7 @@ let RotationMatchWidget = {
         this.rotationSpeedCurr = this.rotationSpeedBegin;
         this.rotationSpeedCurr = 0;
         this.shapeColor = Random.getRandomColorHexString();
+        this.shapeType = Random.getRandomValueFromArray(Object.values(Shapes.values));
         console.log(this.shapeColor);
 
     },
@@ -87,8 +88,8 @@ let RotationMatchWidget = {
      */
     createDiv: function() {
         this.div = dce("div", "widget-rotationMatch");
-        this.shapeDiv = dce("div", "widget-rotationMatch-shape");
-        this.shapeDiv.style.backgroundColor = this.shapeColor;
+        this.shapeDiv = Shapes.createDiv(this.shapeType, this.shapeColor);
+        addCssClass(this.shapeDiv, "widget-rotationMatch-shape");
         addCssClass(this.shapeDiv, "widget-rotationMatch-rotating");
         this.shapeDiv.style.animation = `widget-rotationMatch-rotatingAnim ${Object.values(this._rotationSpeed)[this.rotationSpeedCurr]}s linear infinite`;
         console.log(Object.keys(this._rotationSpeed)[this.rotationSpeedCurr]);

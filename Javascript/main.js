@@ -264,7 +264,7 @@ let Main = {
         document.body.appendChild(testButton);
 
         // TO TEST THINGS, CHANGE THE SHAPE TYPE IN THIS LINE!
-        this.serverWidget = WidgetHelpers.create(LiquidPourWidget);
+        this.serverWidget = WidgetHelpers.create(RotationMatchWidget);
 
         this.clientWidget = JSON.parse(JSON.stringify(this.serverWidget));
         this.clientWidget = Object.assign({}, Main.map[this.serverWidget.typeString], this.serverWidget);
