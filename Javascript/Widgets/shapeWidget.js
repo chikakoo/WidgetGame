@@ -164,7 +164,7 @@
      */
     compare: function(serverWidget) {
         // TODO: color ranges if custom colors are used
-        return this.shape === serverWidget.shape && this.color === serverWidget.color;
+        return this.shape === serverWidget.shape && this.color.toLowerCase() === serverWidget.color.toLowerCase();
     },
 
     /**

@@ -51,7 +51,7 @@ let WidgetBase = {
     div: null,
 
     /**
-     * Initializes any properties on the widget, including randomizing any relevant settings
+     * Initializes any properties on the widget
      */
     initialize: function() {
         this.typeString = "WidgetBase"; // REMEMBER TO CHANGE THIS WHEN YOU COPY THIS OVER
@@ -75,6 +75,13 @@ let WidgetBase = {
      */
     compare: function(serverWidget) {
         throw "ERROR: compare not defined!";
+    },
+
+    /**
+     * All the logic related to DOM elements needs to go here and nowhere else!
+     */
+    createDiv: function() {
+        throw "ERROR: createDiv not defined!";
     }
 };
 

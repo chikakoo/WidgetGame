@@ -18,7 +18,9 @@ let Main = {
      * A map of widget types to their default objects
      */
     map: {
-        "ShapeWidget": ShapeWidget
+        "TextboxWidget": TextboxWidget,
+        "ShapeWidget": ShapeWidget,
+        "LiquidPourWidget": LiquidPourWidget
     },
 
     /**
@@ -211,7 +213,7 @@ let Main = {
 
         let allMatch = true;
         Object.keys(Main.activeWidgets).forEach(function(widgetId) {
-            if (!Main.activeWidgets[widgetId].compare(clientWidgets[widgetId])) {
+            if (!clientWidgets[widgetId].compare(Main.activeWidgets[widgetId])) {
                 allMatch = false;
             }
         });

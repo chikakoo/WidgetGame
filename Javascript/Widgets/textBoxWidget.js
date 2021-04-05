@@ -3,6 +3,11 @@
  */
  let TextboxWidget = {
     /**
+     * The widget type - set to the variable name above AND THIS IN INITIALIZE TOO!
+     */
+    typeString: "TextboxWidget",
+
+    /**
      * The difficulties that this widget can be
      */
     difficulties: [Difficulties.EASY],
@@ -26,15 +31,7 @@
      * Initializes the timeout stuff
      */
     initialize: function() { 
-        this.div = dce("div", "widget-textbox");
-        this._input = dce("input");
-
-        let _this = this;
-        this._input.onchange = function() {
-            _this.text = _this._input.value.trim();
-        };
-
-        this.div.appendChild(this._input);
+        this.typeString = "TextboxWidget";
     },
 
     /**
@@ -42,7 +39,6 @@
      */
     randomize: function() {
         this.text = String(Random.getRandomNumber(100000, 1000000));
-        this._input.value = this.text;
     },
 
     /**
@@ -54,4 +50,20 @@
     compare: function(serverWidget) {
         return this.text === serverWidget.text;
     },
+
+    /**
+     * Handles div creation
+     */
+    createDiv: function() {
+        this.div = dce("div", "widget-textbox");
+        this._input = dce("input");
+        this._input.value = this.text;
+
+        let _this = this;
+        this._input.onchange = function() {
+            _this.text = _this._input.value.trim();
+        };
+
+        this.div.appendChild(this._input);
+    }
 };
