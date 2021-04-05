@@ -175,8 +175,10 @@
         this._shapeDiv = dce("div", "widget-shape");
         this.div.appendChild(this._shapeDiv);
 
-        this.div.onclick = this._advanceShape.bind(this, 1);
-        this.div.oncontextmenu = this._advanceShape.bind(this, -1);
+        if (this.client) {
+            this.div.onclick = this._advanceShape.bind(this, 1);
+            this.div.oncontextmenu = this._advanceShape.bind(this, -1);
+        }
 
         this._refreshUI();
     },
@@ -401,7 +403,7 @@
      * Sets up the color picker
      */
     _setUpColorPicker: function() {
-        if (!this._colorPicker) {
+        if (!this._colorPicker && this.client) {
             this._colorPicker = ColorPicker.create(this._usedColors);
 
             let colorPickerDiv = dce("div", "widget-shape-color-picker-container");

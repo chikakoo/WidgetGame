@@ -262,7 +262,7 @@ let Main = {
         document.body.appendChild(header);
         document.body.appendChild(testButton);
 
-        // TO TEST THINGS, CHANGE THE SHAPE TYPE IN THIS LINE!
+        // TO TEST THINGS, CHANGE THE WIDGET TYPE IN THIS LINE!
         this.serverWidget = WidgetHelpers.create(ShapeWidget);
 
         this.clientWidget = JSON.parse(JSON.stringify(this.serverWidget));

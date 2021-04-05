@@ -64,6 +64,10 @@
             _this.text = _this._input.value.trim();
         };
 
+        if (!this.client) {
+            this._input.setAttribute("disabled", "");
+        }
+
         this.div.appendChild(this._input);
     }
 };
