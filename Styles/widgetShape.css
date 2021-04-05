@@ -15,6 +15,7 @@
 .widget-shape-color-picker-container {
     position: absolute;
     top: 0;
+    z-index: 1;
 }
 
 .widget-shape-color-picker-container input {

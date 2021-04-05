@@ -30,58 +30,6 @@
     _shapeDiv: null,
 
     /**
-     * An array of all the shapes the widget can be
-     */
-    _allShapes: [
-        "square",
-        "rectangle",
-        "circle",
-        "oval",
-        "pill",
-        "triangle-up",
-        "triangle-down",
-        "triangle-left",
-        "triangle-right",
-        "triangle-top-left",
-        "triangle-top-right",
-        "triangle-bottom-left",
-        "triangle-bottom-right",
-        "chevron-up",
-        "chevron-down",
-        "chevron-fat",
-        "curved-tail-arrow",
-        "trapezoid",
-        "parallelogram",
-        "star-6",
-        "star-5",
-        "pentagon",
-        "hexagon",
-        "heart",
-        "infinity",
-        "diamond-square",
-        "diamond-shield",
-        "diamond-narrow",
-        "diamond-cut",
-        "egg",
-        "cross",
-        "base",
-        "lock",
-        "cone",
-        "moon",
-        "facebook",
-        "magnifying-glass",
-        "pac-man",
-        "talk-bubble",
-        "rss",
-        "burst-12",
-        "burst-8",
-        "yin-yang",
-        "ribbon",
-        "space-invader",
-        "tv-screen"
-    ],
-
-    /**
      * An array of the current shapes being used
      */
     _currentShapes: [],
@@ -135,7 +83,7 @@
      */
     _populateAllShapes: function() {
         //TODO: set this to another number
-        this._currentShapes = Random.getRandomValuesFromArray(this._allShapes, 5);//this._allShapes.length);
+        this._currentShapes = Random.getRandomValuesFromArray(Object.values(Shapes.values), 5);//Shapes.values.length);
     },
 
     /**
@@ -172,8 +120,6 @@
      */
     createDiv: function() {
         this.div = dce("div", "widget-shape-container");
-        this._shapeDiv = dce("div", "widget-shape");
-        this.div.appendChild(this._shapeDiv);
 
         if (this.client) {
             this.div.onclick = this._advanceShape.bind(this, 1);
@@ -203,200 +149,13 @@
      * Refreshes the UI - sets the css class and the color
      */
     _refreshUI: function() {
-        this._shapeDiv.className = "";
-        this._shapeDiv.style = "";
-
-        addCssClass(this._shapeDiv, `widget-shape`);
-        addCssClass(this._shapeDiv, `widget-shape-${this.shape}`);
-        this._adjustInlineStyleForShape();
-
-        this._setUpColorPicker();
-    },
-
-    /**
-     * Adjusts the inline style based on the current shape
-     */
-    _adjustInlineStyleForShape: function() {
-        switch(this.shape) {
-            case "triangle-up":
-            case "triangle-bottom-left":
-            case "triangle-bottom-right":
-                this._shapeDiv.style.borderBottom = `100px solid ${this.color}`;
-                break;
-            case "triangle-down":
-            case "triangle-top-left":
-            case "triangle-top-right":
-                this._shapeDiv.style.borderTop = `100px solid ${this.color}`;
-                break;
-            case "triangle-left":
-                this._shapeDiv.style.borderLeft = `100px solid ${this.color}`;
-                break;
-            case "triangle-right":
-                this._shapeDiv.style.borderRight = `100px solid ${this.color}`;
-                break;
-            case "trapezoid":
-                this._shapeDiv.style.borderBottom = `50px solid ${this.color}`;
-                break;
-            case "chevron-up":
-            case "chevron-down":
-                this._shapeDiv.style.border = `10px solid ${this.color}`;
-                this._shapeDiv.style.borderTop = "0";
-                this._shapeDiv.style.borderLeft = "0";
-                break;
-            case "chevron-fat":
-                this._shapeDiv.pseudoStyle("before", "background", this.color);
-                this._shapeDiv.pseudoStyle("after", "background", this.color);
-                break;
-            case "curved-tail-arrow":
-                this._shapeDiv.style.borderRight = `45px solid ${this.color}`;
-                this._shapeDiv.pseudoStyle("after", "border-top", `15px solid ${this.color}`);
-                break;
-            case "star-6":
-                this._shapeDiv.style.borderBottom = `75px solid ${this.color}`;
-                this._shapeDiv.pseudoStyle("after", "border-top", `75px solid ${this.color}`);
-                break;
-            case "star-5":
-                this._shapeDiv.style.color = this.color;
-                this._shapeDiv.style.borderBottom = `35px solid ${this.color}`;
-                this._shapeDiv.pseudoStyle("before", "border-bottom", `40px solid ${this.color}`);
-                this._shapeDiv.pseudoStyle("after", "color", this.color);
-                this._shapeDiv.pseudoStyle("after", "border-bottom", `35px solid ${this.color}`);
-                break;
-            case "pentagon":
-                this._shapeDiv.style.borderColor = `${this.color} transparent`;
-                this._shapeDiv.pseudoStyle("before", "border-color", `transparent transparent ${this.color}`);
-                break;
-            case "hexagon":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.pseudoStyle("before", "border-bottom", `21.65px solid ${this.color}`);
-                this._shapeDiv.pseudoStyle("after", "border-top", `21.65px solid ${this.color}`);
-                break;
-            case "heart":
-                this._shapeDiv.pseudoStyle("before", "background", this.color);
-                this._shapeDiv.pseudoStyle("after", "background", this.color);
-                break;
-            case "infinity":
-                this._shapeDiv.pseudoStyle("before", "border", `20px solid ${this.color}`);
-                this._shapeDiv.pseudoStyle("after", "border", `20px solid ${this.color}`);
-                break;
-            case "diamond-square":
-                this._shapeDiv.style.borderBottomColor = this.color;
-                this._shapeDiv.pseudoStyle("after", "border-top", `50px solid ${this.color}`);
-                break;
-            case "diamond-shield":
-                this._shapeDiv.style.borderBottom = `20px solid ${this.color}`;
-                this._shapeDiv.pseudoStyle("after", "border-top", `70px solid ${this.color}`);
-                break;
-            case "diamond-narrow":
-                this._shapeDiv.style.borderBottom = `70px solid ${this.color}`;
-                this._shapeDiv.pseudoStyle("after", "border-top", `70px solid ${this.color}`);
-                break;
-            case "diamond-cut":
-                this._shapeDiv.style.borderColor = `transparent transparent ${this.color} transparent`;
-                this._shapeDiv.pseudoStyle("after", "border-color", `${this.color} transparent transparent transparent`);
-                break;
-            case "cross":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.pseudoStyle("after", "background", this.color);
-                break;
-            case "base":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.pseudoStyle("before", "border-bottom", `35px solid ${this.color}`);
-                break;
-            case "lock":
-                this._shapeDiv.style.border = `3.5em solid ${this.color}`;
-                this._shapeDiv.style.borderRightWidth = "7.5em";
-                this._shapeDiv.style.borderLeftWidth = "7.5em";
-                this._shapeDiv.pseudoStyle("before", "border", `2.5em solid ${this.color}`);
-                this._shapeDiv.pseudoStyle("after", "border", `1em solid ${this.color}`);
-                break;
-            case "cone":
-                this._shapeDiv.style.borderTop = `100px solid ${this.color}`;
-                break;
-            case "moon":
-                this._shapeDiv.style.boxShadow = `15px 15px 0 0 ${this.color}`;
-                break;
-            case "facebook":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.style.border = `15px solid ${this.color}`;
-                this._shapeDiv.style.borderBottom = 0;
-                this._shapeDiv.pseudoStyle("before", "background", this.color);
-                break;
-            case "magnifying-glass":
-                this._shapeDiv.style.border = `0.1em solid ${this.color}`;
-                this._shapeDiv.pseudoStyle("before", "background", this.color);
-                break;
-            case "pac-man":
-                this._shapeDiv.style.borderTop = `60px solid ${this.color}`;
-                this._shapeDiv.style.borderBottom = `60px solid ${this.color}`;
-                this._shapeDiv.style.borderLeft = `60px solid ${this.color}`;
-                break;
-            case "talk-bubble":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.pseudoStyle("before", "border-right", `26px solid ${this.color}`);
-                break;
-            case "rss":
-                this._shapeDiv.style.backgroundColor = this.color;
-                this._shapeDiv.pseudoStyle("after", "background", this.color);
-                this._shapeDiv.pseudoStyle("after", "box-shadow", `-2em 2em 0 0 #fff inset, -4em 4em 0 0 ${this.color} inset, -6em 6em 0 0 #fff inset`);
-                break;
-            case "burst-12":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.pseudoStyle("before", "background", this.color);
-                this._shapeDiv.pseudoStyle("after", "background", this.color);
-                break;
-            case "burst-8":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.pseudoStyle("before", "background", this.color);
-                break;
-            case "yin-yang":
-                this._shapeDiv.style.borderColor = this.color;
-                this._shapeDiv.pseudoStyle("before", "border", `18px solid ${this.color}`);
-                this._shapeDiv.pseudoStyle("after", "background", this.color);
-                break;
-            case "ribbon":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.pseudoStyle("before", "border-bottom", `70px solid ${this.color}`);
-                this._shapeDiv.pseudoStyle("after", "border-bottom", `70px solid ${this.color}`);
-                break;
-            case "space-invader":
-                this._shapeDiv.style.background = this.color;
-                this._shapeDiv.style.boxShadow = 
-                    `0 0 0 1em ${this.color},
-                    0 1em 0 1em ${this.color},
-                    -2.5em 1.5em 0 .5em ${this.color},
-                    2.5em 1.5em 0 .5em ${this.color},
-                    -3em -3em 0 0 ${this.color},
-                    3em -3em 0 0 ${this.color},
-                    -2em -2em 0 0 ${this.color},
-                    2em -2em 0 0 ${this.color},
-                    -3em -1em 0 0 ${this.color},
-                    -2em -1em 0 0 ${this.color},
-                    2em -1em 0 0 ${this.color},
-                    3em -1em 0 0 ${this.color},
-                    -4em 0 0 0 ${this.color},
-                    -3em 0 0 0 ${this.color},
-                    3em 0 0 0 ${this.color},
-                    4em 0 0 0 ${this.color},
-                    -5em 1em 0 0 ${this.color},
-                    -4em 1em 0 0 ${this.color},
-                    4em 1em 0 0 ${this.color},
-                    5em 1em 0 0 ${this.color},
-                    -5em 2em 0 0 ${this.color},
-                    5em 2em 0 0 ${this.color},
-                    -5em 3em 0 0 ${this.color},
-                    -3em 3em 0 0 ${this.color},
-                    3em 3em 0 0 ${this.color},
-                    5em 3em 0 0 ${this.color},
-                    -2em 4em 0 0 ${this.color},
-                    -1em 4em 0 0 ${this.color},
-                    1em 4em 0 0 ${this.color},
-                    2em 4em 0 0 ${this.color}`;
-                break;
-            default:
-                this._shapeDiv.style.backgroundColor = this.color;
-                break;
+        if (this._shapeDiv) {
+            this._shapeDiv.remove();
         }
+
+        this._shapeDiv = Shapes.createDiv(this.shape, this.color);
+        this.div.appendChild(this._shapeDiv);
+        this._setUpColorPicker();
     },
 
     /**
