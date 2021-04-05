@@ -37,7 +37,7 @@ let LiquidPourWidget = {
      */
     initialize: function() {
         this.typeString = "LiquidPourWidget";
-        
+        this.liquidColor = Random.getRandomColorHexString();
         if (this.client) {
             this.liquidBeginPer = 0;
             this.liquidCurrPer = 0;
@@ -92,7 +92,7 @@ let LiquidPourWidget = {
         if (this.liquidCurrPer >= (serverWidget.liquidGoalPer - 3)) {
             if (this.liquidCurrPer <= (serverWidget.liquidGoalPer + 3)) return true;
         }        
-        return false;
+        return false;   
     },
 
     /**
@@ -101,6 +101,7 @@ let LiquidPourWidget = {
     createDiv: function() {
         this.div = dce("div", "widget-liquidPour");
         this.liquidDiv = dce("div", "widget-liquidPour-liquid");
+        this.liquidDiv.style.backgroundColor = this.liquidColor;
 
         this.fillButton = dce("button", "widget-liquidPour-fillButton");
         this.fillButton.onmousedown = this.pourLiquid.bind(this);

@@ -89,5 +89,9 @@ let Random = {
         }
 
         return output;
+    },
+
+    getRandomColorHexString: function(){
+        return `#${Random.getRandomNumber(0,255).toString(16).padStart(2, '0')}${Random.getRandomNumber(0,255).toString(16).padStart(2, '0')}${Random.getRandomNumber(0,255).toString(16).padStart(2, '0')}`;
     }
 };

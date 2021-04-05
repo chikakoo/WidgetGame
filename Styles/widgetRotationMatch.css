@@ -1,0 +1,55 @@
+.widget-rotationMatch {
+    position:relative;
+    width: 100px;
+    height: 100px;
+    background-color:gray;
+}
+
+.widget-rotationMatch-shape {
+    position:absolute;
+    top: 25%;
+    left: 25%;
+    width: 50px;
+    height: 50px;
+    background-color:red;
+}
+
+@keyframes widget-rotationMatch-rotatingAnim {
+    from{
+        -webkit-transform: rotate(0deg);
+    }
+    to{
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.widget-rotationMatch-rotating {
+    animation: widget-rotationMatch-rotatingAnim 2s linear infinite;
+}
+
+.widget-rotationMatch-increaseButton{
+    position:absolute;
+    border: 4px solid #d67d34;
+    transform: rotate(225deg);    
+}
+
+.widget-rotationMatch-decreaseButton{ 
+    position:absolute;
+    border: 4px solid #2e5fff;
+    top: 45px;
+    transform: rotate(45deg);
+    background-color:white;
+}
+
+.widget-rotationMatch-increaseButton, .widget-rotationMatch-decreaseButton{
+    width: 15px;
+    height: 15px;
+    border-left: 0;
+    border-top: 0;
+    left: calc(100% + 15px);
+    background-color:white;
+}
+
+.widget-rotationMatch-increaseButton:focus, .widget-rotationMatch-decreaseButton:focus{
+    outline:0;
+}
