@@ -18,6 +18,11 @@ let Difficulties = {
  */
 let WidgetBase = {
     /**
+     * The widget type - set to the variable name above AND THIS IN INITIALIZE TOO!
+     */
+    type: "WidgetBase",
+
+    /**
      * The difficulties that this widget can be
      */
     difficulties: [Difficulties.EASY],
@@ -54,14 +59,17 @@ let WidgetBase = {
 
     /**
      * Randomizes aspects of the widget
+     * This NEEDS to be recallable so that it's possible to solve from the previous state
      */
     randomize: function() {
+        this.type = "WidgetBase"; // REMEMBER TO CHANGE THIS WHEN YOU COPY THIS OVER
         throw "ERROR: randomize not defined!";
     },
 
     /**
      * Compares this widget to the given widget to check whether they match
      * Intended to be called by the client widget only
+     * DO NOT use any DOM objects here!
      * @param serverWidget - the server widget
      * @return - true if they're the same, false otherwise
      */
@@ -78,20 +86,14 @@ let WidgetHelpers = {
     /**
      * Creates a client and server widget
      * @param widget - the widget to create
-     * @return - an object containing the client and server widget
+     * @return - the created widget
      */
     create: function(widget) {
-        let clientWidget = Object.create(widget);
-        clientWidget.client = true;
-        clientWidget.id = Globals.widgets++;
+        let newWidget = Object.create(widget);
+        newWidget.id = Globals.widgets++;
+        this._initialize(newWidget);
 
-        let serverWidget = Object.create(widget);
-        serverWidget.id = clientWidget.id;
-
-        this._initialize(clientWidget);
-        this._initialize(serverWidget);
-
-        return { client: clientWidget, server: serverWidget }
+        return newWidget;
     },
 
     /**
@@ -102,6 +104,7 @@ let WidgetHelpers = {
         widget.difficulty = this.getRandomDifficulty(widget);
         widget.initialize();
         widget.randomize();
+        widget.createDiv();
 
         let min = 0, max = 0;
         let callback = widget.timeoutCallback;

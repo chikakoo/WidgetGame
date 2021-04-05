@@ -15,6 +15,13 @@ let Main = {
     activeWidgets: {},
 
     /**
+     * A map of widget types to their default objects
+     */
+    map: {
+        "ShapeWidget": ShapeWidget
+    },
+
+    /**
      * Debug properties
      */
     clientWidget: null,
@@ -25,7 +32,7 @@ let Main = {
      */
     initialize: function() {
         if (Settings.debugMode) {
-            let widgets = WidgetHelpers.create(WidgetShape);
+            let widgets = WidgetHelpers.create(ShapeWidget);
             this.clientWidget = widgets.client;
             this.serverWidget = widgets.server;
             this._initializeForDebug();
@@ -46,13 +53,12 @@ let Main = {
         if (!roomAndUsername) {
             return;
         }
-
-        this.isClient = true;
         SocketClient.createRoom(roomAndUsername.roomName, roomAndUsername.username);
     },
 
     /**
      * Gets the room and user name - includes showing errors if necessary
+     * @skipRoomName - pass true if you only want the username
      * @return - the room and username in an object (roomName, username as properties); falsey if there's a problem
      */
     _getRoomAndUsername: function(skipRoomName) {
@@ -97,7 +103,6 @@ let Main = {
                 if (!roomAndUsername) {
                     return;
                 }
-                this.isClient = false;
                 SocketClient.joinRoom(roomButton.innerText, roomAndUsername.username);
             }
             roomListDiv.appendChild(roomButton);
@@ -109,42 +114,58 @@ let Main = {
      * @param roomname - the name of the room
      */
     onRoomJoined: function(roomName) {
-        this.roomName = roomName;
+        Main.roomName = roomName;
 
         addCssClass(document.getElementById("preRoomJoin"), "nodisp");
         removeCssClass(document.getElementById("roomLobby"), "nodisp");
+        document.getElementById("startGame").setAttribute("disabled", "");
+
         SocketClient.updateConnectedUsernames();
     },
 
     /**
      * Update the list of connected users
+     * Also enables the start game button for the host if there's more than one player
      * @param usernames - the usernames
      */
     updateConnectedUsernames: function(usernames) {
         let playerList = document.getElementById("playerList");
-        playerList.innerText = usernames.join(" ");
+        playerList.innerText = usernames.join(" | ");
+
+        if (!Main.isClient && usernames.length > 1) {
+            document.getElementById("startGame").removeAttribute("disabled");
+        }
     },
 
     /**
      * Starts the game
      */
     onStartGameClicked: function() {
-        let widgets = WidgetHelpers.create(WidgetShape);
-        this.activeWidgets[widgets.client.id] = widgets.client;
+        this._createAndSetWidgetsForGame();
+        SocketClient.roundStart();
+        this.showGameWidgets(this.activeWidgets);
+    },
 
-        let serverWidgets = {};
-        serverWidgets[widgets.server.id] = widgets.server;
+    /**
+     * Gets an array of widgets to use for the next game
+     * TODO: the real logic for this
+     * @param levelNumber - the level number to use for difficulty, etc.
+     */
+    _createAndSetWidgetsForGame: function(levelNumber) {
+        let widget = WidgetHelpers.create(ShapeWidget);
 
-        SocketClient.roundStart(serverWidgets, this.activeWidgets);
+        this.activeWidgets = {};
+        this.activeWidgets[widget.id] = widget;
     },
 
     /**
      * Shows the game widgets
      */
-    showGameWidgets: function(clientWidgets) {
+    showGameWidgets: function(widgets) {
         let gameWinDiv = document.getElementById("checkGameWin");
         if (Main.isClient) {
-            Main.activeWidgets = clientWidgets;
+            Main.activeWidgets = widgets;
+            Main.rehydrateWidgets();
             removeCssClass(gameWinDiv, "nodisp");
         } else {
             addCssClass(gameWinDiv, "nodisp");
@@ -152,14 +173,25 @@ let Main = {
 
         let widgetContainer = document.getElementById("widgetContainer");
         widgetContainer.innerHTML = "";
-        Object.keys(clientWidgets).forEach(function(id) {
-            let widget = clientWidgets[id];
-            widget.createDiv(); // This won't exist after being sent across socket.io, so recreate it
-            widgetContainer.appendChild(widget.div);
+        Object.keys(widgets).forEach(function(id) {
+            widgetContainer.appendChild(widgets[id].div);
         });
         
         addCssClass(document.getElementById("roomLobby"), "nodisp");
         removeCssClass(document.getElementById("gameActive"), "nodisp");
+    },
+
+    /**
+     * Rehydrate the widgets - includes re-randomizing them
+     * @param widgets - the widgets to rehydrate
+     */
+    rehydrateWidgets() {
+        Object.keys(Main.activeWidgets).forEach(function(id) {
+            Main.activeWidgets[id] = Object.assign({}, Main.map[Main.activeWidgets[id].typeString], Main.activeWidgets[id]);
+            Main.activeWidgets[id].client = true;
+            Main.activeWidgets[id].randomize();
+            Main.activeWidgets[id].createDiv();
+        });
     },
 
     /**

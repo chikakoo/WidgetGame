@@ -2,7 +2,12 @@
  * A widget that shows a div of various shapes
  * Its color can be changed with left click; shape with right click (?)
  */
- let WidgetShape = {
+ let ShapeWidget = {
+    /**
+     * The widget type - set to the variable name above AND THIS IN INITIALIZE TOO!
+     */
+     typeString: "ShapeWidget",
+
     /**
      * The difficulties that this widget can be
      */
@@ -120,11 +125,55 @@
      * Initializes any properties on the widget, including randomizing any relevant settings
      */
     initialize: function() {
+        this.typeString = "ShapeWidget";
+        this._populateAllShapes();
+        this._setUpUsedColors();
+    },
+
+    /**
+     * Populates the current shapes with a number of shapes from allShapes
+     */
+    _populateAllShapes: function() {
+        //TODO: set this to another number
+        this._currentShapes = Random.getRandomValuesFromArray(this._allShapes, 5);//this._allShapes.length);
+    },
+
+    /**
+     * Gets a randomly generated array of rgb colors to cycle through
+     * Easy mode will use a random set of colors
+     * TODO: this - a different amount based on difficulty
+     * @returns an array of colors
+     */
+    _setUpUsedColors: function() {
+        this._usedColors = Random.getRandomValuesFromArray(this._allColors, 3);//this._allColors.length);
+    },
+
+    /**
+     * Randomizes aspects of the widget
+     */
+    randomize: function() {
+        this._colorPicker = false;
+        this.shape = Random.getRandomValueFromArray(this._currentShapes);
+        this.color = Random.getRandomValueFromArray(this._usedColors);
+    },
+
+    /**
+     * Compares this widget to the given widget to check whether they match
+     * @param serverWidget - the server widget
+     * @return - true if they're the same, false otherwise
+     */
+    compare: function(serverWidget) {
+        // TODO: color ranges if custom colors are used
+        return this.shape === serverWidget.shape && this.color === serverWidget.color;
+    },
+
+    /**
+     * Creates the div for the widget
+     */
+    createDiv: function() {
         this.div = dce("div", "widget-shape-container");
         this._shapeDiv = dce("div", "widget-shape");
         this.div.appendChild(this._shapeDiv);
-
-        this.populateAllShapes();
 
         let _this = this;
         this.div.onclick = function() {
@@ -136,36 +185,8 @@
                 _this._refreshUI();
             }
         }
-    },
-
-    /**
-     * Populates the current shapes with a number of shapes from allShapes
-     */
-    populateAllShapes: function() {
-        //TODO: set this to another number
-        this._currentShapes = Random.getRandomValuesFromArray(this._allShapes, this._allShapes.length);
-    },
-
-    /**
-     * Randomizes aspects of the widget
-     */
-    randomize: function() {
-        this.shape = Random.getRandomValueFromArray(this._allShapes);
-
-        this._setUpUsedColors();
-        this.color = Random.getRandomValueFromArray(this._usedColors);
 
         this._refreshUI();
-    },
-
-    /**
-     * Gets a randomly generated array of rgb colors to cycle through
-     * Easy mode will use a random set of colors
-     * TODO: this - a different amount based on difficulty
-     * @returns an array of colors
-     */
-    _setUpUsedColors: function() {
-        this._usedColors = Random.getRandomValuesFromArray(this._allColors, this._allColors.length);
     },
 
     /**
@@ -387,15 +408,5 @@
                 _this._refreshUI();
             }
         }
-    },
-
-    /**
-     * Compares this widget to the given widget to check whether they match
-     * @param serverWidget - the server widget
-     * @return - true if they're the same, false otherwise
-     */
-    compare: function(serverWidget) {
-        // TODO: color ranges if custom colors are used
-        return this.shape === serverWidget.shape && this.color === serverWidget.color;
     }
 };

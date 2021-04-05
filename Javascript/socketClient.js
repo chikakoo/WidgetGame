@@ -22,19 +22,43 @@ SocketClient = {
 			console.log('Disconnected from the server');
 		});
 
-        this._socket.on('room_joined', function(roomName) {
+        /**
+         * Used by the host so that the isClient flag is set to false
+         * Also handles the UI for the lobby
+         */
+        this._socket.on('room_created', function(roomName) {
+            Main.isClient = false;
             Main.onRoomJoined(roomName);
         });
 
+        /**
+         * Used by the client so that the isClient flag is set to true
+         * Also handles the UI for the lobby
+         */
+        this._socket.on('room_joined', function(roomName) {
+            Main.isClient = true;
+            Main.onRoomJoined(roomName);
+        });
+
+        /**
+         * Updates the list of rooms to join
+         */
         this._socket.on('update_rooms', function(rooms) {
             Main.updateRoomList(rooms);
         });
 
+        /**
+         * Updates the list of connected players
+         */
         this._socket.on('update_connected_usernames', function(usernames) {
             Main.updateConnectedUsernames(usernames);
         });
 
+        /**
+         * Only called on the non-host; passes along the created widgets for the client to rehydrate, randomize, and display
+         */
         this._socket.on('round_start', function(clientWidgets) {
+            console.log("Round starting!");
             Main.showGameWidgets(clientWidgets);
         });
 
@@ -89,20 +113,18 @@ SocketClient = {
     },
 
     /**
-     * Starts the round
-     * @param serverWidgets - an object of server widgets, keyed by id
-     * @param clientWidgets - an object of client widgets, keyed by id
+     * Starts the round - uses the properties set in Main
      */
-    roundStart: function(serverWidgets, clientWidgets) {
+    roundStart: function() {
         if (this._socket) {
-            this._socket.emit("round_start", Main.roomName, serverWidgets, clientWidgets);
+            this._socket.emit("round_start", Main.roomName, Main.activeWidgets);
         }
     },
 
     /**
      * Checks the state of the given client widgets against the server
      * @param clientWidgets - an object of client widgets, keyed by id
-     */
+     */ 
     checkRound: function(clientWidgets) {
         if (this._socket) {
             this._socket.emit("check_round", clientWidgets);
