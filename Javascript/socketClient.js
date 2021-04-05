@@ -62,10 +62,23 @@ SocketClient = {
             Main.showGameWidgets(clientWidgets);
         });
 
+        /**
+         * Passes the widget data from the non-host over to the host so that they can be compared
+         */
+        this._socket.on("check_round", function(clientWidgets) {
+            Main.checkWinState(clientWidgets);
+        })
+
+        /**
+         * Called when the state has been checked, but it isn't a win
+         */
         this._socket.on('round_checked', function() {
-            console.log("Round checked - not won yet");
+            Main.onRoundChecked();
         });
 
+        /**
+         * Called when the round is won
+         */
         this._socket.on('round_win', function() {
             Main.onRoundWin();
         });
@@ -127,7 +140,17 @@ SocketClient = {
      */ 
     checkRound: function(clientWidgets) {
         if (this._socket) {
-            this._socket.emit("check_round", clientWidgets);
+            this._socket.emit("check_round", Main.roomName, clientWidgets);
+        }
+    },
+
+    /**
+     * Called when the win state is checked
+     * @param gameWon - true if the game was won
+     */
+    onWinStateChecked: function(gameWon) {
+        if (this._socket) {
+            this._socket.emit("win_state_checked", Main.roomName, gameWon);
         }
     }
 };

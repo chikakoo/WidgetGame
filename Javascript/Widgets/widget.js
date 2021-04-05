@@ -20,7 +20,7 @@ let WidgetBase = {
     /**
      * The widget type - set to the variable name above AND THIS IN INITIALIZE TOO!
      */
-    type: "WidgetBase",
+     typeString: "WidgetBase",
 
     /**
      * The difficulties that this widget can be
@@ -54,6 +54,7 @@ let WidgetBase = {
      * Initializes any properties on the widget, including randomizing any relevant settings
      */
     initialize: function() {
+        this.typeString = "WidgetBase"; // REMEMBER TO CHANGE THIS WHEN YOU COPY THIS OVER
         throw "ERROR: initialize not defined!";
     },
 
@@ -62,7 +63,6 @@ let WidgetBase = {
      * This NEEDS to be recallable so that it's possible to solve from the previous state
      */
     randomize: function() {
-        this.type = "WidgetBase"; // REMEMBER TO CHANGE THIS WHEN YOU COPY THIS OVER
         throw "ERROR: randomize not defined!";
     },
 

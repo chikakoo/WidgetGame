@@ -95,27 +95,22 @@ io.on('connection', function(client) {
     });
 
     /**
-     * Check the state of the round - compares the list of client widgets to the goal state of the server widgets
+     * Check the state of the round - passes the client widgets over to the host
      */
     client.on('check_round', function(roomName, clientWidgets) {
-        // console.log("Checking round...");
-
-        // let serverWidgets = rooms[roomName].activeWidgets;
-        // let allMatch = true;
-        // Object.keys(serverWidgets).forEach(function(widgetId) {
-        //     if (!clientWidgets[widgetId].compare(serverWidgets[widgetId])) {
-        //         allMatch = false;
-        //     }
-        // });
-
-        // if (allMatch) {
-        //     console.log("Round win!");
-        //     client.broadcast.emit('round_win');
-        // } else {
-        //     console.log("No win yet...");
-        //     client.broadcast.emit('round_checked');
-        // }
+        client.to(roomName).broadcast.emit('check_round', clientWidgets);
     });
+
+    /**
+     * Called when checking the win state of the game
+     */
+    client.on('win_state_checked', function(roomName, gameWon) {
+        if (gameWon) {
+            client.to(roomName).broadcast.emit('round_win');
+        } else {
+            client.to(roomName).broadcast.emit('round_checked');
+        }
+    })
 });
 
 /**

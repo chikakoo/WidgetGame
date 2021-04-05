@@ -165,10 +165,10 @@ let Main = {
         let gameWinDiv = document.getElementById("checkGameWin");
         if (Main.isClient) {
             Main.activeWidgets = widgets;
-            Main.rehydrateWidgets();
-            removeCssClass(gameWinDiv, "nodisp");
+            Main.rehydrateWidgets(Main.activeWidgets, true);
+            removeCssClass(gameWinDiv, "hidden");
         } else {
-            addCssClass(gameWinDiv, "nodisp");
+            addCssClass(gameWinDiv, "hidden");
         }
 
         let widgetContainer = document.getElementById("widgetContainer");
@@ -184,14 +184,53 @@ let Main = {
     /**
      * Rehydrate the widgets - includes re-randomizing them
      * @param widgets - the widgets to rehydrate
+     * @param randomize - whether to re-randomize the widget
      */
-    rehydrateWidgets() {
-        Object.keys(Main.activeWidgets).forEach(function(id) {
-            Main.activeWidgets[id] = Object.assign({}, Main.map[Main.activeWidgets[id].typeString], Main.activeWidgets[id]);
-            Main.activeWidgets[id].client = true;
-            Main.activeWidgets[id].randomize();
-            Main.activeWidgets[id].createDiv();
+    rehydrateWidgets: function(widgets, randomize) {
+        Object.keys(widgets).forEach(function(id) {
+            widgets[id] = Object.assign({}, Main.map[widgets[id].typeString], widgets[id]);
+            widgets[id].client = true;
+            if (randomize) { widgets[id].randomize() };
+            widgets[id].createDiv();
         });
+    },
+
+    /**
+     * Executed when the game win button is clicked
+     */
+    onCheckGameWinClicked: function() {
+        SocketClient.checkRound(this.activeWidgets);
+    },
+
+    /**
+     * Called when the server gives us the server the client widgets
+     * Checks the win state and acts accordingly
+     */
+    checkWinState: function(clientWidgets) {
+        Main.rehydrateWidgets(clientWidgets);
+
+        let allMatch = true;
+        Object.keys(Main.activeWidgets).forEach(function(widgetId) {
+            if (!Main.activeWidgets[widgetId].compare(clientWidgets[widgetId])) {
+                allMatch = false;
+            }
+        });
+
+        SocketClient.onWinStateChecked(allMatch);
+
+        if (allMatch) {
+            Main.onRoundWin();
+        } else {
+            Main.onRoundChecked();
+        }
+    },
+
+    /**
+     * Executed when the round has been checked, but not won yet
+     * TODO STILL
+     */
+    onRoundChecked: function() {
+        console.log("NOT WON!");
     },
 
     /**
