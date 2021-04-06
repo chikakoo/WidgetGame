@@ -91,7 +91,24 @@ let Random = {
         return output;
     },
 
-    getRandomColorHexString: function(){
+    /**
+     * Gets a hex string of a random color
+     * @returns The hex color string
+     */
+    getRandomColorHexString: function() {
         return `#${Random.getRandomNumber(0,255).toString(16).padStart(2, '0')}${Random.getRandomNumber(0,255).toString(16).padStart(2, '0')}${Random.getRandomNumber(0,255).toString(16).padStart(2, '0')}`;
+    },
+
+    /**
+     * Gets a list of hex strings of a random color
+     * @param amount - the amount of strings to get
+     * @returns The hex color strings
+     */
+    getRandomColorHexStrings: function(amount) {
+        let strings = [];
+        for (let i = 0; i < amount; i++) {
+            strings.push(this.getRandomColorHexString());
+        }
+        return strings;
     }
 };

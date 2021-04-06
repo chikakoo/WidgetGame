@@ -11,7 +11,7 @@
     /**
      * The difficulties that this widget can be
      */
-    difficulties: [Difficulties.EASY],
+    difficulties: [Difficulties.EASY, Difficulties.MEDIUM, Difficulties.HARD],
 
     /**
      * The current difficulty - this is set to a random value based on the difficulties array
@@ -82,18 +82,40 @@
      * Populates the current shapes with a number of shapes from allShapes
      */
     _populateAllShapes: function() {
-        //TODO: set this to another number
-        this._currentShapes = Random.getRandomValuesFromArray(Object.values(Shapes.values), 5);//Shapes.values.length);
+        let numberOfShapes = 5;
+
+        switch(this.difficulty) {
+            case Difficulties.EASY:
+                numberOfShapes = 4;
+                break;
+            case Difficulties.MEDIUM:
+                numberOfShapes = 6
+                break;
+            case Difficulties.HARD:
+                numberOfShapes = 8;
+                break;     
+        }
+
+        this._currentShapes = Random.getRandomValuesFromArray(Object.values(Shapes.values), numberOfShapes);
     },
 
     /**
      * Gets a randomly generated array of rgb colors to cycle through
      * Easy mode will use a random set of colors
-     * TODO: this - a different amount based on difficulty
      * @returns an array of colors
      */
     _setUpUsedColors: function() {
-        this._usedColors = Random.getRandomValuesFromArray(this._allColors, 3);//this._allColors.length);
+        switch(this.difficulty) {
+            case Difficulties.EASY:
+                this._usedColors = Random.getRandomValuesFromArray(this._allColors, 5);
+                break;
+            case Difficulties.MEDIUM:
+                this._usedColors = Random.getRandomColorHexStrings(5);
+                break;
+            case Difficulties.HARD:
+                this._usedColors = [Random.getRandomColorHexString()];
+                return; 
+        }
     },
 
     /**
@@ -102,7 +124,10 @@
     randomize: function() {
         this._colorPicker = false;
         this.shape = Random.getRandomValueFromArray(this._currentShapes);
-        this.color = Random.getRandomValueFromArray(this._usedColors);
+
+        this.color = this.difficulty === Difficulties.HARD ?
+            Random.getRandomColorHexString() :
+            Random.getRandomValueFromArray(this._usedColors);
     },
 
     /**
@@ -111,8 +136,9 @@
      * @return - true if they're the same, false otherwise
      */
     compare: function(serverWidget) {
-        // TODO: color ranges if custom colors are used
-        return this.shape === serverWidget.shape && this.color.toLowerCase() === serverWidget.color.toLowerCase();
+        let tolerance = this.difficulty === Difficulties.HARD ? 30 : 0;
+        return this.shape === serverWidget.shape && 
+            ColorPicker.compareColors(this.color, serverWidget.color, tolerance);
     },
 
     /**
