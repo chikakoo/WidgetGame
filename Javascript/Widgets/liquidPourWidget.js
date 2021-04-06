@@ -100,6 +100,7 @@ let LiquidPourWidget = {
      */
     createDiv: function() {
         this.div = dce("div", "widget-liquidPour");
+
         this.liquidDiv = dce("div", "widget-liquidPour-liquid");
         this.liquidDiv.style.backgroundColor = this.liquidColor;
 
@@ -112,10 +113,16 @@ let LiquidPourWidget = {
         this.emptyButton.onmousedown = this.emptyLiquid.bind(this);
         this.emptyButton.onmouseup = this.stopMovingLiquid.bind(this);
         this.emptyButton.onmouseleave = this.stopMovingLiquid.bind(this);
+        
+        let liquidContainer = dce("div", "widget-liquidPour-liquid-container");
+        liquidContainer.appendChild(this.liquidDiv);
 
-        this.div.appendChild(this.liquidDiv);
-        this.div.appendChild(this.fillButton);
-        this.div.appendChild(this.emptyButton);
+        let buttonContainer = dce("div", "widget-liquidPour-button-container");
+        buttonContainer.appendChild(this.fillButton);
+        buttonContainer.appendChild(this.emptyButton);
+
+        this.div.appendChild(liquidContainer);
+        this.div.appendChild(buttonContainer);
         
         if (this.client) {
             this.liquidDiv.style.height = `${this.liquidCurrPer}%`;

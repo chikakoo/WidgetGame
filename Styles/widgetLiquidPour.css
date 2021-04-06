@@ -1,41 +1,50 @@
 .widget-liquidPour {
-    position:relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.widget-liquidPour-liquid-container {
+    position: relative;
     width: 100px;
     height: 100px;
     background-color:gray;
 }
 
-.widget-liquidPour-liquid{
-    position:absolute;
+.widget-liquidPour-liquid {
+    position: absolute;
     width: 100%;
     height: 0;
     bottom: 0;
     background-color:aqua;
 }
 
-.widget-liquidPour-fillButton{
-    position:absolute;
+.widget-liquidPour-button-container {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    justify-content: space-evenly;
+    padding-left: 5px;
+}
+
+.widget-liquidPour-fillButton {
     border: 4px solid #d67d34;
     transform: rotate(225deg);    
 }
 
-.widget-liquidPour-emptyButton{ 
-    position:absolute;
+.widget-liquidPour-emptyButton { 
     border: 4px solid #2e5fff;
-    top: 45px;
     transform: rotate(45deg);
     background-color:white;
 }
 
-.widget-liquidPour-fillButton, .widget-liquidPour-emptyButton{
+.widget-liquidPour-fillButton, .widget-liquidPour-emptyButton {
     width: 15px;
     height: 15px;
     border-left: 0;
     border-top: 0;
-    left: calc(100% + 15px);
     background-color:white;
 }
 
-.widget-liquidPour-fillButton:focus, .widget-liquidPour-emptyButton:focus{
-    outline:0;
+.widget-liquidPour-fillButton:focus, .widget-liquidPour-emptyButton:focus {
+    outline: 0;
 }
