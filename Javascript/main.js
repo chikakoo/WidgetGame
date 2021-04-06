@@ -176,7 +176,10 @@ let Main = {
         let widgetContainer = document.getElementById("widgetContainer");
         widgetContainer.innerHTML = "";
         Object.keys(widgets).forEach(function(id) {
-            widgetContainer.appendChild(widgets[id].div);
+            let widgetWrapper = dce("div", "widget-wrapper");
+            widgetWrapper.appendChild(widgets[id].div);
+
+            widgetContainer.appendChild(widgetWrapper);
         });
         
         document.getElementById("levelDiv").innerText = `Level: ${Main.currentLevel++}`;
