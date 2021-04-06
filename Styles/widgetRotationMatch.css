@@ -16,6 +16,7 @@
     position: relative;
     width: 100px;
     height: 100px;
+    padding: 20px;
     background-color: gray;
 }
 
@@ -30,10 +31,6 @@
 
 .widget-rotationMatch-rotating {
     animation: widget-rotationMatch-rotatingAnim 2s linear infinite;
-}
-
-.widget-rotationMatch-rotating > div {
-    overflow: hidden;
 }
 
 .widget-rotationMatch-increaseButton {
@@ -57,5 +54,5 @@
 }
 
 .widget-rotationMatch-increaseButton:focus, .widget-rotationMatch-decreaseButton:focus{
-    outline:0;
+    outline: 0;
 }
