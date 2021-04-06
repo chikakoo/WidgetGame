@@ -10,3 +10,9 @@
     color: red;
     font-weight: bold;
 }
+
+#widgetContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
