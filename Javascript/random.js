@@ -110,5 +110,18 @@ let Random = {
             strings.push(this.getRandomColorHexString());
         }
         return strings;
+    },
+
+    /**
+     * Generates a string with ASCII characters with values from 32 - 126
+     * Table: http://www.asciitable.com/
+     * @param length - the length of the string
+     */
+    getRandomASCIIString: function(length) {
+        let output = "";
+        for (let i = 0; i < length; i++) {
+            output += String.fromCharCode(this.getRandomNumber(32, 126));
+        }
+        return output;
     }
 };

@@ -10,7 +10,13 @@
     /**
      * The difficulties that this widget can be
      */
-    difficulties: [Difficulties.EASY],
+    difficulties: [Difficulties.EASY, Difficulties.MEDIUM, Difficulties.HARD],
+
+    /**
+     * The current difficulty - this is set to a random value based on the difficulties array
+     * See WidgetHelpers._initialize
+     */
+    difficulty: Difficulties.EASY,
 
     /**
      * The div that will be used for this widget
@@ -38,7 +44,19 @@
      * Randomizes the text in the textbox
      */
     randomize: function() {
-        this.text = String(Random.getRandomNumber(100000, 1000000));
+        switch (this.difficulty) {
+            case Difficulties.EASY:
+                this.text = String(Random.getRandomNumber(100, 999));
+                break;
+            case Difficulties.MEDIUM:
+                this.text = String(Random.getRandomNumber(10000, 99999));
+                break;
+            case Difficulties.HARD:
+                this.text = Random.getRandomASCIIString(5);
+                break;
+        }
+
+        
     },
 
     /**
@@ -48,7 +66,7 @@
      * @return - true if they're the same, false otherwise
      */
     compare: function(serverWidget) {
-        return this.text === serverWidget.text;
+        return this.text.trim() === serverWidget.text.trim();
     },
 
     /**
@@ -58,6 +76,7 @@
         this.div = dce("div", "widget-textbox");
         this._input = dce("input");
         this._input.value = this.text;
+        this._input.setAttribute("size", "5");
 
         let _this = this;
         this._input.onchange = function() {
