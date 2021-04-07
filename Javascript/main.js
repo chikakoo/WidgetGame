@@ -157,6 +157,7 @@ let Main = {
         this.activeWidgets = {};
         for (let i = 0; i < this.currentLevel; i++) {
             let widget = WidgetHelpers.create(Random.getRandomEntryFromObject(this.map));
+            ModifierHelpers.tryAddModifier(widget, this.currentLevel);
             this.activeWidgets[widget.id] = widget;
         }
     },
@@ -177,15 +178,27 @@ let Main = {
         let widgetContainer = document.getElementById("widgetContainer");
         widgetContainer.innerHTML = "";
         Object.keys(widgets).forEach(function(id) {
-            let widgetWrapper = dce("div", "widget-wrapper");
-            widgetWrapper.appendChild(widgets[id].div);
-
-            widgetContainer.appendChild(widgetWrapper);
+            Main._createAndAppendWidgetWrapper(widgets[id], widgetContainer);
         });
         
         document.getElementById("levelDiv").innerText = `Level: ${Main.currentLevel++}`;
         addCssClass(document.getElementById("roomLobby"), "nodisp");
         removeCssClass(document.getElementById("gameActive"), "nodisp");
+    },
+
+    /**
+     * Creates the widget wrapper - also applies modifiers
+     * @param widget - the widget to create the wrapper for
+     * @param parent - the element to append to
+     * @return the created wrapper
+     */
+     _createAndAppendWidgetWrapper: function(widget, parent) {
+        let widgetWrapper = dce("div", "widget-wrapper");
+        widgetWrapper.appendChild(widget.div);
+        parent.appendChild(widgetWrapper);
+        ModifierHelpers.applyModifiers(widget, widgetWrapper);
+
+        return widgetWrapper;
     },
 
     /**
@@ -268,7 +281,10 @@ let Main = {
         document.body.appendChild(testButton);
 
         // TO TEST THINGS, CHANGE THE SHAPE TYPE IN THIS LINE!
-        this.serverWidget = WidgetHelpers.create(MorseWidget);
+        this.serverWidget = WidgetHelpers.create(ShapeWidget);
+
+        let level = 1; // Change to test the effects of the modifiers at a certain level
+        ModifierHelpers.tryAddModifier(this.serverWidget, level);
 
         this.clientWidget = JSON.parse(JSON.stringify(this.serverWidget));
         this.clientWidget = Object.assign({}, Main.map[this.serverWidget.typeString], this.serverWidget);
@@ -276,8 +292,8 @@ let Main = {
         this.clientWidget.randomize();
         this.clientWidget.createDiv();
 
-        document.body.appendChild(this.clientWidget.div);
-        document.body.appendChild(this.serverWidget.div);
+        this._createAndAppendWidgetWrapper(this.clientWidget, document.body);
+        this._createAndAppendWidgetWrapper(this.serverWidget, document.body);
     },
 
     testButtonClick: function() {

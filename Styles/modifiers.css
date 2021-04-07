@@ -1,0 +1,7 @@
+.modifiers-visibility-hide-unless-hover, .modifiers-visibility-hide-on-hover:hover {
+    opacity: 0;
+}
+
+.modifiers-visibility-hide-unless-hover:hover, .modifiers-visibility-hide-on-hover {
+    opacity: 1;
+}

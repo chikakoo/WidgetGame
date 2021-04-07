@@ -136,7 +136,7 @@
      * @return - true if they're the same, false otherwise
      */
     compare: function(serverWidget) {
-        let tolerance = this.difficulty === Difficulties.HARD ? 40 : 0;
+        let tolerance = this.difficulty === Difficulties.HARD ? 80 : 0;
         return this.shape === serverWidget.shape && 
             ColorPicker.compareColors(this.color, serverWidget.color, tolerance);
     },
