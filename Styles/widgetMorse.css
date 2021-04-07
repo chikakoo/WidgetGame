@@ -1,0 +1,33 @@
+.widget-morse {
+    display: flex;
+    flex-direction: row;
+}
+
+.widget-morse-main {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 200px;
+}
+
+.widget-morse-key {
+    position:relative;
+    left: 0px;
+    top: 0px;
+    height: fit-content;
+    width: 300px;
+    column-count: 3;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.widget-morse-answerBox {
+    position:relative;
+    width: 300px;
+    height: 200px;
+    line-height:200px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: xxx-large;
+    text-align: center;
+    vertical-align: middle;
+}
+

@@ -26,7 +26,8 @@ let Main = {
         "TextboxWidget": TextboxWidget,
         "ShapeWidget": ShapeWidget,
         "LiquidPourWidget": LiquidPourWidget,
-        "RotationMatchWidget": RotationMatchWidget
+        "RotationMatchWidget": RotationMatchWidget,
+        "MorseWidget": MorseWidget
     },
 
     /**
@@ -267,7 +268,7 @@ let Main = {
         document.body.appendChild(testButton);
 
         // TO TEST THINGS, CHANGE THE SHAPE TYPE IN THIS LINE!
-        this.serverWidget = WidgetHelpers.create(RotationMatchWidget);
+        this.serverWidget = WidgetHelpers.create(MorseWidget);
 
         this.clientWidget = JSON.parse(JSON.stringify(this.serverWidget));
         this.clientWidget = Object.assign({}, Main.map[this.serverWidget.typeString], this.serverWidget);
