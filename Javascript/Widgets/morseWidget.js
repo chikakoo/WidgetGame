@@ -141,7 +141,7 @@ let MorseWidget = {
         this.mainContainerDiv = dce("div", "widget-morse-main")
 
         this.morseKeyDiv = dce("div", "widget-morse-key"); // Client side only- shows mapping of letters to morse
-        this.morseKeyDiv.innerText= "A: .-\nB: -...\nC: -.-.\nD: -..\nE: .\nF: ..-.\nG: --.\nH: ....\nI: ..\nJ: .-- -\nK: -.-\nL: .-..\nM: --\nN: -.\nO: ---\nP: .--.\nQ: --.-\nR: .-.\nS: ...\nT: -\nU: ..-\nV: ...-\nW: .--\nX: -..-\nY: -.--\nZ: --..";
+        this.morseKeyDiv.innerText= "A: .-\nB: -...\nC: -.-.\nD: -..\nE: .\nF: ..-.\nG: --.\nH: ....\nI: ..\nJ: .---\nK: -.-\nL: .-..\nM: --\nN: -.\nO: ---\nP: .--.\nQ: --.-\nR: .-.\nS: ...\nT: -\nU: ..-\nV: ...-\nW: .--\nX: -..-\nY: -.--\nZ: --..";
         this.morseKeyDiv.style.backgroundColor = Random.getRandomColorHexString();
 
         this.answerDiv = dce("div", "widget-morse-answerBox"); // Server side only- shows the morse code being tapped out
