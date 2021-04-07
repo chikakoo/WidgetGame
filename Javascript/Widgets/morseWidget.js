@@ -109,7 +109,7 @@ let MorseWidget = {
      * @return - true if they're the same, false otherwise
      */
     compare: function(serverWidget) {
-        if (this.input.value.toUpperCase() === serverWidget.answerLetters.toUpperCase()) return true;
+        if (this.answerInput.toUpperCase() === serverWidget.answerLetters.toUpperCase()) return true;
         else return false;
     },
 
@@ -148,6 +148,11 @@ let MorseWidget = {
         this.answerDiv.style.backgroundColor = Random.getRandomColorHexString();
         this.input = dce("input"); // Client side only- place to enter the answer 
         this.input.value = "";
+
+        let _this = this;
+        this.input.onchange = function() {
+            _this.answerInput = _this.input.value.trim();
+        };
 
         if (this.client) {
             addCssClass(this.answerDiv, "nodisp");      
