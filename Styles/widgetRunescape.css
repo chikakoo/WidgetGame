@@ -1,0 +1,33 @@
+.widget-runescape {
+    background: url("../Images/RunescapeWidget/background.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 150px;
+    height: 209px;
+}
+
+.widget-runescape-items {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 107px;
+    left: 22px;
+    top: 30px;
+}
+
+.widget-runescape .widget-runescape-item {
+    width: 26px;
+    height: 16px;
+    padding-bottom: 5px;
+}
+
+.widget-runescape-refresh-button {
+    position: absolute;
+    width: 22px;
+    height: 21px;
+}
+
+.widget-runescape-item-selected {
+    -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+    filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+}

@@ -27,7 +27,8 @@ let Main = {
         "ShapeWidget": ShapeWidget,
         "LiquidPourWidget": LiquidPourWidget,
         "RotationMatchWidget": RotationMatchWidget,
-        "MorseWidget": MorseWidget
+        "MorseWidget": MorseWidget,
+        "RunescapeWidget": RunescapeWidget
     },
 
     /**
@@ -281,7 +282,7 @@ let Main = {
         document.body.appendChild(testButton);
 
         // TO TEST THINGS, CHANGE THE SHAPE TYPE IN THIS LINE!
-        this.serverWidget = WidgetHelpers.create(ShapeWidget);
+        this.serverWidget = WidgetHelpers.create(RunescapeWidget);
 
         let level = 1; // Change to test the effects of the modifiers at a certain level
         ModifierHelpers.tryAddModifier(this.serverWidget, level);

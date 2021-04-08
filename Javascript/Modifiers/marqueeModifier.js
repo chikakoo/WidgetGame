@@ -1,9 +1,13 @@
 let MarqueeModifier = {
+    widgetsToExclude: [
+        "MorseWidget"
+    ],
+
     /**
      * Sets up the initial values for the marquee
      */
     initialize: function() {
-        this.typeString = "MarqueeModifier"; // IMPORTANT, SET THIS TO THE VARIABLE NAME!
+        this.typeString = "MarqueeModifier";
         this.direction = Random.getRandomValueFromArray(["up", "down", "left", "right"]);
         this.scrollAmount = Random.getRandomNumber(1, 3);
     },

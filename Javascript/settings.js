@@ -1,3 +1,4 @@
 let Settings = {
-    debugMode: true
+    debugMode: true,
+    disableModifiers: false
 };

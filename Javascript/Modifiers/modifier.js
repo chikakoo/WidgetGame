@@ -36,14 +36,18 @@ let ModifierHelpers = {
      * @param widget - the widget
      * @param currentLevel - the current level
      */
-    tryAddModifier: function(widget, currentLevel) {
+     tryAddModifier: function(widget, currentLevel) {
         //TODO: make this based on level somehow? Currently a 15% chance of getting a modifier
-        if (!Random.getRandomBooleanFromPercentage(20)) {
+        if (!Random.getRandomBooleanFromPercentage(20) || Settings.disableModifiers) {
             return;
         }
 
         //let modifier = Object.create(MarqueeModifier); // Use this for testing and comment the line below and the return above
         let modifier = Object.create(Random.getRandomValueFromArray(Object.values(this.map)));
+        if (modifier.widgetsToExclude && modifier.widgetsToExclude.includes(widget.typeString)) {
+            return;
+        }
+
         modifier.initialize();
 
         widget.modifiers = widget.modifiers || [];
