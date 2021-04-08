@@ -196,6 +196,15 @@ let Main = {
      _createAndAppendWidgetWrapper: function(widget, parent) {
         let widgetWrapper = dce("div", "widget-wrapper");
         widgetWrapper.appendChild(widget.div);
+
+        let widgetIdDiv = document.getElementById("widgetIdDiv");
+        widgetWrapper.onmouseover = function() {
+            widgetIdDiv.innerText = `Widget ID: ${widget.id}`;
+        };
+        widgetWrapper.onmouseleave = function() {
+            widgetIdDiv.innerText = "";
+        };
+
         parent.appendChild(widgetWrapper);
         ModifierHelpers.applyModifiers(widget, widgetWrapper);
 

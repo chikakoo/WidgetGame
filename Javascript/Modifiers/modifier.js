@@ -37,8 +37,8 @@ let ModifierHelpers = {
      * @param currentLevel - the current level
      */
      tryAddModifier: function(widget, currentLevel) {
-        //TODO: make this based on level somehow? Currently a 15% chance of getting a modifier
-        if (!Random.getRandomBooleanFromPercentage(20) || Settings.disableModifiers) {
+        //TODO: make this based on level somehow? Currently a 20% chance of getting a modifier
+        if (!Random.getRandomBooleanFromPercentage(100) || Settings.disableModifiers) {
             return;
         }
 

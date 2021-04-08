@@ -22,3 +22,12 @@
     height: fit-content;
     margin: 3px;
 }
+
+#gameActiveHeader {
+    display: flex;
+    flex-direction: row;
+}
+
+#gameActiveHeader div {
+    padding-right: 10px;
+}

@@ -20,166 +20,6 @@ let RunescapeWidget = {
      */
     div: null,
 
-    /**
-     * The list of possible items
-     */
-    items: {
-        FEATHER: { 
-            name: "feather",
-            onClick: function(index) {
-                this.itemClickHandlers.TRY_CRAFT.call(this, index, "ARROW_SHAFT", "HEADLESS_ARROW");
-            }
-        },
-        ARROW_SHAFT: { 
-            onClick: function(index) {
-                this.itemClickHandlers.TRY_CRAFT.call(this, index, "FEATHER", "HEADLESS_ARROW");
-            },
-            name: "arrow_shaft" 
-        },
-        HEADLESS_ARROW: { 
-            name: "headless_arrow",
-            components: ["FEATHER", "ARROW_SHAFT"]
-        },
-
-        RAW_LOBSTER: { name: "raw_lobster" },
-        LOBSTER: { 
-            name: "lobster",
-            onClick: function(index) {
-                this.itemClickHandlers.FOOD.call(this, index);
-            },
-            getModifiedKey: function(index) {
-                return this.itemModifiers.FOOD.call(this, "LOBSTER");
-            }
-        },
-
-        RAW_SHARK: { name: "raw_shark" },
-        SHARK: { 
-            name: "shark",
-            onClick: function(index) {
-                this.itemClickHandlers.FOOD.call(this, index);
-            },
-            getModifiedKey: function() {
-                return this.itemModifiers.FOOD.call(this, "SHARK");
-            }
-        },
-
-        CAKE: { 
-            name: "cake",
-            onClick: function(index) {
-                if (this.selectedIndex) {
-                    this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
-                    return;
-                }
-
-                this.itemList[index] = "CAKE_ONE_BITE";
-                this._refreshItemsContainer();
-            },
-            getModifiedKey: function() {
-                switch(Random.getRandomNumber(1, 4)) {
-                    case 1:
-                        return "CAKE";
-                    case 2:
-                        return "CAKE_ONE_BITE";
-                    case 3: 
-                        return "CAKE_TWO_BITES";
-                    case 4: 
-                        return "EMPTY";
-                }
-            }
-        },
-
-        CAKE_ONE_BITE: {
-            name: "cake_one_bite",
-            exclude: true,
-            onClick: function(index) {
-                if (this.selectedIndex) {
-                    this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
-                    return;
-                }
-
-                this.itemList[index] = "CAKE_TWO_BITES";
-                this._refreshItemsContainer();
-            },
-            getModifiedKey: function() {
-                switch(Random.getRandomNumber(1, 3)) {
-                    case 1:
-                        return "CAKE_ONE_BITE";
-                    case 2: 
-                        return "CAKE_TWO_BITES";
-                    case 3: 
-                        return "EMPTY";
-                }
-            }
-        },
-
-        CAKE_TWO_BITES: {
-            name: "cake_two_bites",
-            exclude: true,
-            onClick: function(index) {
-                this.itemClickHandlers.FOOD.call(this, index);
-            },
-            getModifiedKey: function() {
-                return this.itemModifiers.FOOD.call(this, "CAKE_TWO_BITES");
-            }
-        }
-    },
-
-    itemClickHandlers: {
-        DEFAULT: function(index) {
-            if (this.selectedIndex) {
-                this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
-                return;
-            }
-
-            if (this.itemList[index] === "EMPTY") {
-                return;
-            }
-
-            this.selectedIndex = index;
-            addCssClass(this.divList[index], "widget-runescape-item-selected");
-        },
-        NOTHING_INTERESTING_HAPPENS: function() {
-            removeCssClass(this.divList[this.selectedIndex], "widget-runescape-item-selected");
-            this.selectedIndex = 0;
-        },
-        FOOD: function(index, itemDiv) {
-            if (this.selectedIndex) {
-                this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
-                return;
-            }
-
-            this.itemList[index] = "EMPTY";
-            this._refreshItemsContainer();
-        },
-        TRY_CRAFT: function(index, otherIngredient, itemToCraft) {
-            if (!this.selectedIndex) {
-                this.itemClickHandlers.DEFAULT.call(this, index);
-                return;
-            }
-
-            if (this.selectedIndex && this.itemList[this.selectedIndex] === otherIngredient) {
-                this.itemClickHandlers.CRAFT.call(this, itemToCraft, index, this.selectedIndex);
-                return;
-            }
-            this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
-        },
-        CRAFT: function(itemToCraft, index1, index2) {
-            this.itemList[index1] = "EMPTY";
-            this.itemList[index2] = "EMPTY";
-            this.itemList[this._findNextEmptyInventorySlot()] = itemToCraft;
-            this._refreshItemsContainer();
-        }
-    },
-
-    itemModifiers: {
-        FOOD: function(oldKey) {
-            if (Random.getRandomBooleanFromPercentage(20)) {
-                return "EMPTY";
-            }
-            return oldKey;
-        }
-    },
-
     _findNextEmptyInventorySlot: function() {
         for (let i = 0; i < this.itemList.length; i++) {
             if (this.itemList[i] === "EMPTY") {
@@ -205,6 +45,7 @@ let RunescapeWidget = {
     initialize: function() {
         this.typeString = "RunescapeWidget";
         let numberOfItems = Random.getRandomNumber(5, 10); //TODO: set this somehow based on difficulty
+        this.initializeProperties();
 
         this.itemList = [];
         let _this = this;
@@ -224,6 +65,172 @@ let RunescapeWidget = {
             }
         }
     },
+
+    /**
+     * Initializes the item properties, etc
+     */
+    initializeProperties: function() {
+        /**
+         * The list of possible items
+         */
+        this.items = {
+            FEATHER: { 
+                name: "feather",
+                onClick: function(index) {
+                    this.itemClickHandlers.TRY_CRAFT.call(this, index, "ARROW_SHAFT", "HEADLESS_ARROW");
+                }
+            },
+            ARROW_SHAFT: { 
+                onClick: function(index) {
+                    this.itemClickHandlers.TRY_CRAFT.call(this, index, "FEATHER", "HEADLESS_ARROW");
+                },
+                name: "arrow_shaft" 
+            },
+            HEADLESS_ARROW: { 
+                name: "headless_arrow",
+                components: ["FEATHER", "ARROW_SHAFT"]
+            },
+
+            RAW_LOBSTER: { name: "raw_lobster" },
+            LOBSTER: { 
+                name: "lobster",
+                onClick: function(index) {
+                    this.itemClickHandlers.FOOD.call(this, index);
+                },
+                getModifiedKey: function(index) {
+                    return this.itemModifiers.FOOD.call(this, "LOBSTER");
+                }
+            },
+
+            RAW_SHARK: { name: "raw_shark" },
+            SHARK: { 
+                name: "shark",
+                onClick: function(index) {
+                    this.itemClickHandlers.FOOD.call(this, index);
+                },
+                getModifiedKey: function() {
+                    return this.itemModifiers.FOOD.call(this, "SHARK");
+                }
+            },
+
+            CAKE: { 
+                name: "cake",
+                onClick: function(index) {
+                    if (this.selectedIndex) {
+                        this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
+                        return;
+                    }
+
+                    this.itemList[index] = "CAKE_ONE_BITE";
+                    this._refreshItemsContainer();
+                },
+                getModifiedKey: function() {
+                    switch(Random.getRandomNumber(1, 4)) {
+                        case 1:
+                            return "CAKE";
+                        case 2:
+                            return "CAKE_ONE_BITE";
+                        case 3: 
+                            return "CAKE_TWO_BITES";
+                        case 4: 
+                            return "EMPTY";
+                    }
+                }
+            },
+
+            CAKE_ONE_BITE: {
+                name: "cake_one_bite",
+                exclude: true,
+                onClick: function(index) {
+                    if (this.selectedIndex) {
+                        this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
+                        return;
+                    }
+
+                    this.itemList[index] = "CAKE_TWO_BITES";
+                    this._refreshItemsContainer();
+                },
+                getModifiedKey: function() {
+                    switch(Random.getRandomNumber(1, 3)) {
+                        case 1:
+                            return "CAKE_ONE_BITE";
+                        case 2: 
+                            return "CAKE_TWO_BITES";
+                        case 3: 
+                            return "EMPTY";
+                    }
+                }
+            },
+
+            CAKE_TWO_BITES: {
+                name: "cake_two_bites",
+                exclude: true,
+                onClick: function(index) {
+                    this.itemClickHandlers.FOOD.call(this, index);
+                },
+                getModifiedKey: function() {
+                    return this.itemModifiers.FOOD.call(this, "CAKE_TWO_BITES");
+                }
+            }
+        };
+
+        this.itemClickHandlers = {
+            DEFAULT: function(index) {
+                if (this.selectedIndex) {
+                    this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
+                    return;
+                }
+
+                if (this.itemList[index] === "EMPTY") {
+                    return;
+                }
+
+                this.selectedIndex = index;
+                addCssClass(this.divList[index], "widget-runescape-item-selected");
+            },
+            NOTHING_INTERESTING_HAPPENS: function() {
+                removeCssClass(this.divList[this.selectedIndex], "widget-runescape-item-selected");
+                this.selectedIndex = 0;
+            },
+            FOOD: function(index, itemDiv) {
+                if (this.selectedIndex) {
+                    this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
+                    return;
+                }
+
+                this.itemList[index] = "EMPTY";
+                this._refreshItemsContainer();
+            },
+            TRY_CRAFT: function(index, otherIngredient, itemToCraft) {
+                if (!this.selectedIndex) {
+                    this.itemClickHandlers.DEFAULT.call(this, index);
+                    return;
+                }
+
+                if (this.selectedIndex && this.itemList[this.selectedIndex] === otherIngredient) {
+                    this.itemClickHandlers.CRAFT.call(this, itemToCraft, index, this.selectedIndex);
+                    return;
+                }
+                this.itemClickHandlers.NOTHING_INTERESTING_HAPPENS.call(this);
+            },
+            CRAFT: function(itemToCraft, index1, index2) {
+                this.itemList[index1] = "EMPTY";
+                this.itemList[index2] = "EMPTY";
+                this.itemList[this._findNextEmptyInventorySlot()] = itemToCraft;
+                this._refreshItemsContainer();
+            }
+        },
+
+        this.itemModifiers = {
+            FOOD: function(oldKey) {
+                if (Random.getRandomBooleanFromPercentage(20)) {
+                    return "EMPTY";
+                }
+                return oldKey;
+            }
+        };
+    },
+
 
     /**
      * Randomizes the runescape widget
@@ -318,6 +325,7 @@ let RunescapeWidget = {
      * All the logic related to DOM elements needs to go here and nowhere else!
      */
     createDiv: function() {
+        this.initializeProperties();
         this.div = dce("div", "widget-runescape");
 
         let refreshButton = dce("div", "widget-runescape-refresh-button");
