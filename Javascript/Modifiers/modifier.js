@@ -25,6 +25,10 @@ let ModifierHelpers = {
         "MarqueeModifier": MarqueeModifier,
         "VisiblityModifier": VisibilityModifier,
         "SkewModifier": SkewModifier,
+        "FlipModifier": FlipModifier,
+        "SizeModifier": SizeModifier,
+        "ExternalBounceModifier": ExternalBounceModifier,
+        "SpinModifier": SpinModifier
     },
 
     /**
@@ -38,7 +42,7 @@ let ModifierHelpers = {
             return;
         }
 
-        //let modifier = Object.create(SkewModifier); // Use this for testing and comment the line below and the return above
+        //let modifier = Object.create(MarqueeModifier); // Use this for testing and comment the line below and the return above
         let modifier = Object.create(Random.getRandomValueFromArray(Object.values(this.map)));
         modifier.initialize();
 

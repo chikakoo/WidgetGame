@@ -18,5 +18,7 @@
 }
 
 .widget-wrapper {
+    width: fit-content;
+    height: fit-content;
     margin: 3px;
 }
